@@ -6,28 +6,47 @@
 		<title>GitHub PR Button Injector</title>
 		<link rel="stylesheet" href="dist/styles.css" />
 	</head>
-	<body class="bg-gray-100 p-6 w-80">
-		<h1 class="text-xl font-bold mb-4">GitHub PR Button Injector</h1>
-		<p class="text-sm text-gray-600 mb-4">
+	<body class="bg-gray-900 text-gray-100 p-6 w-80">
+		<h1 class="text-2xl font-bold mb-4 text-white">GitHub PR Button Injector</h1>
+		<p class="text-sm text-gray-400 mb-6">
 			This extension adds a button to GitHub PR pages that copies PR info to your clipboard.
 		</p>
-		<div class="space-y-2">
-			<label class="flex items-center space-x-2">
-				<input type="radio" name="format" value="markdown" checked class="text-blue-600" />
-				<span>Markdown Format</span>
-			</label>
-			<label class="flex items-center space-x-2">
-				<input type="radio" name="format" value="plain" class="text-blue-600" />
-				<span>Plain Text Format</span>
-			</label>
-		</div>
-		<div class="mt-4">
-			<label for="prefix" class="block text-sm font-medium text-gray-700">Prefix:</label>
+		<fieldset>
+			<legend class="text-sm font-semibold leading-6 text-white">Format Selection</legend>
+			<p class="mt-1 text-sm leading-6 text-gray-400">Choose how you want to copy the PR info:</p>
+			<div class="mt-4 space-y-4">
+				<div class="flex items-center">
+					<input
+						id="markdown"
+						name="format"
+						type="radio"
+						value="markdown"
+						checked
+						class="h-4 w-4 border-gray-700 text-blue-600 focus:ring-blue-600 focus:ring-offset-gray-900" />
+					<label for="markdown" class="ml-3 block text-sm font-medium leading-6 text-white"
+						>Markdown Format</label
+					>
+				</div>
+				<div class="flex items-center">
+					<input
+						id="plain"
+						name="format"
+						type="radio"
+						value="plain"
+						class="h-4 w-4 border-gray-700 text-blue-600 focus:ring-blue-600 focus:ring-offset-gray-900" />
+					<label for="plain" class="ml-3 block text-sm font-medium leading-6 text-white"
+						>Plain Text Format</label
+					>
+				</div>
+			</div>
+		</fieldset>
+		<div class="mt-6">
+			<label for="prefix" class="block text-sm font-medium text-gray-300 mb-2">Prefix:</label>
 			<input
 				type="text"
 				id="prefix"
 				placeholder="Enter custom prefix (e.g., :github:)"
-				class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+				class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
 		</div>
 		<script src="popup.js"></script>
 	</body>
