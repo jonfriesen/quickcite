@@ -6,6 +6,10 @@
 # General files
 TODO.md
 
+# Build files
+dist/
+build/
+
 # Thumbnails
 ._*
 

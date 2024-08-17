@@ -1,3 +1,7 @@
+import '../styles/main.css'
+import '../styles/button.css'
+import './popup.css'
+
 document.addEventListener('DOMContentLoaded', () => {
 	// Load the current preferences
 	chrome.storage.sync.get({ formatPreference: 'markdown', prefix: ':github:', buttonStyle: 'dark' }, (items) => {

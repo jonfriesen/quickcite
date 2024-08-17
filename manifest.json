@@ -6,27 +6,29 @@
   "permissions": ["clipboardWrite", "webNavigation", "storage"],
   "host_permissions": ["https://github.com/*", "https://www.linkedin.com/*"],
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": "dist/icon.png"
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "48": "src/assets/icon.png",
+      "128": "src/assets/icon.png"
+    }
   },
   "icons": {
-    "48": "dist/icon.png",
-    "128": "dist/icon.png"
+    "48": "src/assets/icon.png",
+    "128": "src/assets/icon.png"
   },
   "background": {
-    "service_worker": "background.js",
+    "service_worker": "src/background/background.js",
     "type": "module"
   },
   "content_scripts": [
     {
       "matches": ["https://github.com/*", "https://www.linkedin.com/*"],
-      "css": ["dist/styles.css"],
-      "js": ["content.js"]
+      "js": ["src/content/content.js"]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["dist/buttons.css", "dist/clipboard.svg", "dist/checkmark.svg", "config.js"],
+      "resources": ["assets/*"],
       "matches": ["https://github.com/*", "https://www.linkedin.com/*"]
     }
   ]
