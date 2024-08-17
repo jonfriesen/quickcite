@@ -25,7 +25,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["dist/buttons.css", "dist/clipboard.svg"],
+      "resources": ["dist/buttons.css", "dist/clipboard.svg", "dist/checkmark.svg"],
       "matches": ["https://github.com/*"]
     }
   ]

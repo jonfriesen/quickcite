@@ -46,11 +46,7 @@ function injectButton() {
 			.then(() => {
 				console.debug('Copied to clipboard: ' + textToCopy)
 				const originalHTML = button.innerHTML
-				button.innerHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 1.5em; height: 1.5em;">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-          </svg>
-        `
+				button.innerHTML = `<img src="${chrome.runtime.getURL('dist/checkmark.svg')}" alt="Copy PR Info">`
 				button.classList.add('success')
 				setTimeout(() => {
 					button.innerHTML = originalHTML
