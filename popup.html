@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>GitHub PR Button Injector</title>
+		<style>
+			body {
+				width: 300px;
+				padding: 10px;
+				font-family: Arial, sans-serif;
+			}
+			h1 {
+				font-size: 18px;
+			}
+			label {
+				display: block;
+				margin-top: 10px;
+			}
+			input[type='text'] {
+				width: 100%;
+				padding: 5px;
+				margin-top: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>GitHub PR Button Injector</h1>
+		<p>This extension adds a button to GitHub PR pages that copies PR info to your clipboard.</p>
+		<label> <input type="radio" name="format" value="markdown" checked /> Markdown Format </label>
+		<label> <input type="radio" name="format" value="plain" /> Plain Text Format </label>
+		<label>
+			Prefix:
+			<input type="text" id="prefix" placeholder="Enter custom prefix (e.g., :github:)" />
+		</label>
+		<script src="popup.js"></script>
+	</body>
+</html>
