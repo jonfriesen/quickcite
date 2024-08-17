@@ -40,10 +40,18 @@
 	transition: all 0.2s ease-in-out;
 }
 
+.pr-copy-button img {
+	width: 24px;
+	height: 24px;
+}
+
 .pr-copy-button.dark {
 	background-color: var(--dark-bg);
-	color: #ffffff;
 	border: 2px solid var(--dark-border);
+}
+
+.pr-copy-button.dark img {
+	filter: invert(1);
 }
 
 .pr-copy-button.dark:hover {
@@ -58,7 +66,6 @@
 
 .pr-copy-button.light {
 	background-color: var(--light-bg);
-	color: var(--dark-bg);
 	border: 2px solid var(--light-border);
 }
 
@@ -69,14 +76,16 @@
 
 .pr-copy-button.light.success {
 	background-color: var(--light-success-bg);
-	color: var(--light-success-color);
 	border-color: var(--light-success-border);
 }
 
 .pr-copy-button.retro {
 	background-image: var(--retro-gradient);
-	color: #ffffff;
 	border: 2px solid var(--retro-border);
+}
+
+.pr-copy-button.retro img {
+	filter: invert(1);
 }
 
 .pr-copy-button.retro:hover {
@@ -92,12 +101,19 @@
 
 /* Styles for popup */
 .style-option {
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	width: 40px;
 	height: 40px;
 	margin: 5px;
 	border-radius: 8px;
 	cursor: pointer;
+}
+
+.style-option img {
+	width: 24px;
+	height: 24px;
 }
 
 .style-option.selected {
@@ -109,6 +125,10 @@
 	border: 2px solid var(--dark-border);
 }
 
+#dark-style img {
+	filter: invert(1);
+}
+
 #light-style {
 	background-color: var(--light-bg);
 	border: 2px solid var(--light-border);
@@ -117,4 +137,8 @@
 #retro-style {
 	background-image: var(--retro-gradient);
 	border: 2px solid var(--retro-border);
+}
+
+#retro-style img {
+	filter: invert(1);
 }
