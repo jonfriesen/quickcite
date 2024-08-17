@@ -1,0 +1,20 @@
+{
+  "name": "gh-pr-copier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "background.js",
+  "scripts": {
+    "build": "tailwindcss -i ./styles.css -o ./dist/styles.css --minify",
+    "watch": "tailwindcss -i ./styles.css -o ./dist/styles.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.4",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.10"
+  }
+}
