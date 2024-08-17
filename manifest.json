@@ -3,6 +3,9 @@
   "name": "Multi-Site Info Copier",
   "version": "1.0",
   "description": "Injects buttons on various sites to copy formatted information to clipboard",
+  "author": {
+    "email": "jon@jonfriesen.ca"
+  },
   "permissions": ["clipboardWrite", "webNavigation", "storage"],
   "host_permissions": ["https://github.com/*"],
   "action": {
