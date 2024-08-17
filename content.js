@@ -1,14 +1,19 @@
 let formatPreference = 'markdown'
-let prefix = ':github:'
 let selectedStyle = 'dark' // Default style
 
-function injectButton() {
-	if (document.getElementById('pr-copy-button')) return
+function injectButton(config) {
+	if (document.getElementById(config.buttonId)) return
+
+	const siteConfig = siteConfigs[config.siteKey]
+	const pageConfig = siteConfig.pages[config.pageKey]
+
+	console.log('siteConfig', siteConfig)
+	console.log('pageConfig', pageConfig)
 
 	const button = document.createElement('button')
-	button.id = 'pr-copy-button'
-	button.className = `pr-copy-button ${selectedStyle}`
-	button.innerHTML = `<img src="${chrome.runtime.getURL('dist/clipboard.svg')}" alt="Copy PR Info">`
+	button.id = config.buttonId
+	button.className = `copy-button ${selectedStyle}`
+	button.innerHTML = `<img src="${chrome.runtime.getURL('dist/clipboard.svg')}" alt="Copy Info">`
 
 	// Inject the shared styles
 	const style = document.createElement('link')
@@ -26,19 +31,14 @@ function injectButton() {
 	})
 
 	button.addEventListener('click', () => {
-		const prNumber = document.querySelector('h1.gh-header-title > span.f1-light').textContent.trim()
+		const info = pageConfig.getInfo()
 		const currentUrl = window.location.href
-		const titleElement = document.querySelector('bdi.js-issue-title.markdown-title')
-		const prTitle = titleElement ? titleElement.textContent.trim() : currentUrl
 
 		let textToCopy
-		switch (formatPreference) {
-			case 'markdown':
-				textToCopy = `${prefix} [#${prNumber}: ${prTitle}](${currentUrl})`
-				break
-			default:
-				textToCopy = `#${prNumber}: ${prTitle} - ${currentUrl}`
-				break
+		if (formatPreference === 'markdown') {
+			textToCopy = `${siteConfig.prefix} ${pageConfig.buildMarkdown(info, currentUrl)}`
+		} else {
+			textToCopy = `${siteConfig.prefix} ${pageConfig.buildPlaintext(info, currentUrl)}`
 		}
 
 		navigator.clipboard
@@ -46,7 +46,7 @@ function injectButton() {
 			.then(() => {
 				console.debug('Copied to clipboard: ' + textToCopy)
 				const originalHTML = button.innerHTML
-				button.innerHTML = `<img src="${chrome.runtime.getURL('dist/checkmark.svg')}" alt="Copy PR Info">`
+				button.innerHTML = `<img src="${chrome.runtime.getURL('dist/checkmark.svg')}" alt="Copy Info">`
 				button.classList.add('success')
 				setTimeout(() => {
 					button.innerHTML = originalHTML
@@ -61,10 +61,10 @@ function injectButton() {
 	document.body.appendChild(button)
 }
 
-// Function to remove the button
-function removeButton() {
-	const button = document.getElementById('pr-copy-button')
-	if (button) button.remove()
+// Function to remove all buttons
+function removeButtons() {
+	const buttons = document.querySelectorAll('.copy-button')
+	buttons.forEach((button) => button.remove())
 }
 
 // Listen for messages from the background script
@@ -72,24 +72,21 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	switch (request.action) {
 		case 'injectButton':
 			formatPreference = request.formatPreference
-			prefix = request.prefix
-			injectButton()
+			selectedStyle = request.buttonStyle
+			injectButton(request.config)
 			break
-		case 'removeButton':
-			removeButton()
+		case 'removeButtons':
+			removeButtons()
 			break
 		case 'updatePreference':
 			formatPreference = request.formatPreference
 			break
-		case 'updatePrefix':
-			prefix = request.prefix
-			break
 		case 'updateStyle':
 			selectedStyle = request.buttonStyle
-			const button = document.getElementById('pr-copy-button')
-			if (button) {
-				button.className = `pr-copy-button ${selectedStyle}`
-			}
+			const buttons = document.querySelectorAll('.copy-button')
+			buttons.forEach((button) => {
+				button.className = `copy-button ${selectedStyle}`
+			})
 			break
 	}
 })

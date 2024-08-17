@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "GitHub PR Button Injector",
-  "version": "1.1",
-  "description": "Injects a button on GitHub PR pages to copy a string to clipboard with format preference",
+  "name": "Multi-Site Info Copier",
+  "version": "1.0",
+  "description": "Injects buttons on various sites to copy formatted information to clipboard",
   "permissions": ["clipboardWrite", "webNavigation", "storage"],
-  "host_permissions": ["https://github.com/*"],
+  "host_permissions": ["https://github.com/*", "https://www.linkedin.com/*"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": "dist/icon.png"
@@ -14,19 +14,20 @@
     "128": "dist/icon.png"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   },
   "content_scripts": [
     {
-      "matches": ["https://github.com/*"],
+      "matches": ["https://github.com/*", "https://www.linkedin.com/*"],
       "css": ["dist/styles.css"],
       "js": ["content.js"]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["dist/buttons.css", "dist/clipboard.svg", "dist/checkmark.svg"],
-      "matches": ["https://github.com/*"]
+      "resources": ["dist/buttons.css", "dist/clipboard.svg", "dist/checkmark.svg", "config.js"],
+      "matches": ["https://github.com/*", "https://www.linkedin.com/*"]
     }
   ]
 }

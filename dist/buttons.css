@@ -22,7 +22,7 @@
 	--retro-success-border: #00cc88;
 }
 
-.pr-copy-button {
+.copy-button {
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
@@ -40,60 +40,58 @@
 	transition: all 0.2s ease-in-out;
 }
 
-.pr-copy-button img {
+.copy-button img {
 	width: 24px;
 	height: 24px;
 }
 
-.pr-copy-button.dark {
+.copy-button.dark {
 	background-color: var(--dark-bg);
 	border: 2px solid var(--dark-border);
 }
 
-.pr-copy-button.dark img {
+.copy-button.dark img {
 	filter: invert(1);
 }
 
-.pr-copy-button.dark:hover {
+.copy-button.dark:hover {
 	background-color: var(--dark-hover-bg);
 	border-color: var(--dark-hover-border);
 }
 
-.pr-copy-button.dark.success {
+.copy-button.dark.success {
 	background-color: var(--dark-success-bg);
 	border-color: var(--dark-success-border);
 }
 
-.pr-copy-button.light {
+.copy-button.light {
 	background-color: var(--light-bg);
 	border: 2px solid var(--light-border);
 }
 
-.pr-copy-button.light:hover {
+.copy-button.light:hover {
 	background-color: var(--light-hover-bg);
 	border-color: var(--light-hover-border);
 }
 
-.pr-copy-button.light.success {
+.copy-button.light.success {
 	background-color: var(--light-success-bg);
 	border-color: var(--light-success-border);
 }
 
-.pr-copy-button.retro {
+.copy-button.retro {
 	background-image: var(--retro-gradient);
-	border: 2px solid var(--retro-border);
 }
 
-.pr-copy-button.retro img {
+.copy-button.retro img {
 	filter: invert(1);
 }
 
-.pr-copy-button.retro:hover {
+.copy-button.retro:hover {
 	background-image: var(--retro-hover-gradient);
-	border-color: var(--retro-hover-border);
 }
 
-.pr-copy-button.retro.success {
+.copy-button.retro.success {
 	background-image: none;
 	background-color: var(--retro-success-bg);
 	border-color: var(--retro-success-border);

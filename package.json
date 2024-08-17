@@ -4,8 +4,8 @@
   "description": "",
   "main": "background.js",
   "scripts": {
-    "build": "tailwindcss -i ./styles.css -o ./dist/styles.css --minify",
-    "dev": "tailwindcss -i ./styles.css -o ./dist/styles.css --watch"
+    "build": "tailwindcss -i ./dist/styles.css -o ./dist/styles.css --minify",
+    "dev": "tailwindcss -i ./dist/styles.css -o ./dist/styles.css --watch"
   },
   "keywords": [],
   "author": "",

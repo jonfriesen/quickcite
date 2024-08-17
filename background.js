@@ -1,24 +1,32 @@
-// Function to check if the URL matches our pattern
-function isMatchingUrl(url) {
-	const pattern = /^https:\/\/github\.com\/[^\/]+\/[^\/]+\/pull\/\d+/
-	return pattern.test(url)
+import siteConfigs from './config.js'
+
+// Function to check if the URL matches any of our configured patterns
+function getMatchingConfig(url) {
+	for (const [siteKey, siteConfig] of Object.entries(siteConfigs)) {
+		for (const [pageKey, pageConfig] of Object.entries(siteConfig.pages)) {
+			if (pageConfig.urlPattern.test(url)) {
+				return { siteKey, pageKey, buttonId: pageConfig.buttonId }
+			}
+		}
+	}
+	return null
 }
 
 // Keep track of the last action for each tab
 const tabActions = new Map()
 
 // Function to send a message to the content script
-function sendMessageToContentScript(tabId, action) {
+function sendMessageToContentScript(tabId, action, config) {
 	// Get the current preferences and send them along with the action
-	chrome.storage.sync.get({ formatPreference: 'markdown', prefix: ':github:', buttonStyle: 'dark' }, (items) => {
+	chrome.storage.sync.get({ formatPreference: 'markdown', buttonStyle: 'dark' }, (items) => {
 		if (tabActions.get(tabId) !== action) {
 			chrome.tabs.sendMessage(
 				tabId,
 				{
 					action: action,
 					formatPreference: items.formatPreference,
-					prefix: items.prefix,
 					buttonStyle: items.buttonStyle,
+					config: config,
 				},
 				(response) => {
 					if (chrome.runtime.lastError) {
@@ -49,63 +57,47 @@ const handleNavigation = debounce((details) => {
 				console.log(chrome.runtime.lastError.message)
 				return
 			}
-			const action = isMatchingUrl(tab.url) ? 'injectButton' : 'removeButton'
-			sendMessageToContentScript(details.tabId, action)
+			const config = getMatchingConfig(tab.url)
+			const action = config ? 'injectButton' : 'removeButtons'
+			sendMessageToContentScript(details.tabId, action, config)
 		})
 	}
 }, 250)
 
 // Listen for tab updates
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-	if (changeInfo.status === 'complete' && tab.url?.startsWith('https://github.com')) {
+	if (changeInfo.status === 'complete') {
 		handleNavigation({ tabId, frameId: 0 })
 	}
 })
 
-// Listen for history state updates (for SPAs like GitHub)
-chrome.webNavigation.onHistoryStateUpdated.addListener(handleNavigation, {
-	url: [{ hostEquals: 'github.com' }],
-})
+// Listen for history state updates (for SPAs)
+chrome.webNavigation.onHistoryStateUpdated.addListener(handleNavigation)
 
 // Listen for completed navigations
-chrome.webNavigation.onCompleted.addListener(handleNavigation, {
-	url: [{ hostEquals: 'github.com' }],
-})
+chrome.webNavigation.onCompleted.addListener(handleNavigation)
 
-// Listen for fragment changes (react to changes in the # part of a URL)
-chrome.webNavigation.onReferenceFragmentUpdated.addListener(handleNavigation, {
-	url: [{ hostEquals: 'github.com' }],
-})
+// Listen for fragment changes
+chrome.webNavigation.onReferenceFragmentUpdated.addListener(handleNavigation)
 
 // Listen for messages from the popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	switch (request.action) {
 		case 'updatePreference':
-			chrome.storage.sync.set({ formatPreference: request.formatPreference }, () => {
-				chrome.tabs.query({ url: 'https://github.com/*' }, (tabs) => {
-					tabs.forEach((tab) => {
-						sendMessageToContentScript(tab.id, 'updatePreference')
-					})
-				})
-			})
-			break
-		case 'updatePrefix':
-			chrome.storage.sync.set({ prefix: request.prefix }, () => {
-				chrome.tabs.query({ url: 'https://github.com/*' }, (tabs) => {
-					tabs.forEach((tab) => {
-						sendMessageToContentScript(tab.id, 'updatePrefix')
-					})
-				})
-			})
-			break
 		case 'updateStyle':
-			chrome.storage.sync.set({ buttonStyle: request.buttonStyle }, () => {
-				chrome.tabs.query({ url: 'https://github.com/*' }, (tabs) => {
-					tabs.forEach((tab) => {
-						sendMessageToContentScript(tab.id, 'updateStyle')
+			chrome.storage.sync.set(
+				{ [request.action === 'updatePreference' ? 'formatPreference' : 'buttonStyle']: request[request.action === 'updatePreference' ? 'formatPreference' : 'buttonStyle'] },
+				() => {
+					chrome.tabs.query({}, (tabs) => {
+						tabs.forEach((tab) => {
+							const config = getMatchingConfig(tab.url)
+							if (config) {
+								sendMessageToContentScript(tab.id, request.action, config)
+							}
+						})
 					})
-				})
-			})
+				},
+			)
 			break
 	}
 })
