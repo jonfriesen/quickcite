@@ -3,7 +3,7 @@
 const siteConfigs = {
 	github: {
 		domain: 'github.com',
-		prefix: ':github:',
+		prefix: '🐙',
 		pages: {
 			pr: {
 				urlPattern: /^https:\/\/github\.com\/[^\/]+\/[^\/]+\/pull\/\d+/,
@@ -14,8 +14,8 @@ const siteConfigs = {
 					const prTitle = titleElement ? titleElement.textContent.trim() : document.title
 					return { number: prNumber, title: prTitle }
 				},
-				buildMarkdown: (info, url) => `[#${info.number}: ${info.title}](${url})`,
-				buildPlaintext: (info, url) => `#${info.number}: ${info.title} - ${url}`,
+				buildMarkdown: (info, url) => `[${info.number}: ${info.title}](${url})`,
+				buildPlaintext: (info, url) => `${info.number}: ${info.title} - ${url}`,
 			},
 			issue: {
 				urlPattern: /^https:\/\/github\.com\/[^\/]+\/[^\/]+\/issues\/\d+/,
@@ -26,8 +26,8 @@ const siteConfigs = {
 					const issueTitle = titleElement ? titleElement.textContent.trim() : document.title
 					return { number: issueNumber, title: issueTitle }
 				},
-				buildMarkdown: (info, url) => `[#${info.number}: ${info.title}](${url})`,
-				buildPlaintext: (info, url) => `#${info.number}: ${info.title} - ${url}`,
+				buildMarkdown: (info, url) => `[${info.number}: ${info.title}](${url})`,
+				buildPlaintext: (info, url) => `${info.number}: ${info.title} - ${url}`,
 			},
 			discussion: {
 				urlPattern: /^https:\/\/github\.com\/[^\/]+\/[^\/]+\/discussions\/\d+/,
@@ -38,16 +38,16 @@ const siteConfigs = {
 					const discussionTitle = titleElement ? titleElement.textContent.trim().replace(discussionNumber, '').trim() : document.title
 					return { number: discussionNumber, title: discussionTitle }
 				},
-				buildMarkdown: (info, url) => `[#${info.number}: ${info.title}](${url})`,
-				buildPlaintext: (info, url) => `#${info.number}: ${info.title} - ${url}`,
+				buildMarkdown: (info, url) => `[${info.number}: ${info.title}](${url})`,
+				buildPlaintext: (info, url) => `${info.number}: ${info.title} - ${url}`,
 			},
 			repo: {
 				urlPattern: /^https:\/\/github\.com\/[^\/]+\/[^\/]+\/?$/,
 				buttonId: 'gh-repo-copy-button',
 				getInfo: () => {
-					const repoName = document.querySelector('strong[itemprop="name"] > a').textContent.trim()
+					const repo = document.title.split(':')[0].trim() || document.querySelector('div.AppHeader-context-full').textContent.trim()
 					const repoDescription = document.querySelector('p.f4.my-3').textContent.trim()
-					return { title: repoName, description: repoDescription }
+					return { title: repo, description: repoDescription }
 				},
 				buildMarkdown: (info, url) => `[${info.title}](${url})${info.description ? ` - ${info.description}` : ''}`,
 				buildPlaintext: (info, url) => `${info.title} - ${url}${info.description ? ` (${info.description})` : ''}`,
@@ -56,29 +56,24 @@ const siteConfigs = {
 				urlPattern: /^https:\/\/github\.com\/[^\/]+\/?$/,
 				buttonId: 'gh-user-copy-button',
 				getInfo: () => {
-					const userName = document.querySelector('span.p-nickname').textContent.trim()
-					const userBio = document.querySelector('div[data-bio-text]')?.textContent.trim() || ''
-					return { name: userName, bio: userBio }
+					const name = document.title.trim()
+					let bio = ''
+
+					// Check if it's an organization page
+					const isOrg = !!document.querySelector('meta[name="hovercard-subject-tag"][content^="organization:"]')
+
+					if (isOrg) {
+						// For organizations, try to get the description
+						bio = document.querySelector('header > div > div > div.flex-1.d-flex.flex-column.gap-2 > div.color-fg-muted > div')?.textContent.trim() || ''
+					} else {
+						// For users, get the bio
+						bio = document.querySelector('div[data-bio-text]')?.textContent.trim() || ''
+					}
+
+					return { name, bio }
 				},
 				buildMarkdown: (info, url) => `[${info.name}](${url})${info.bio ? ` - ${info.bio}` : ''}`,
 				buildPlaintext: (info, url) => `${info.name} - ${url}${info.bio ? ` (${info.bio})` : ''}`,
-			},
-		},
-	},
-	linkedin: {
-		domain: 'linkedin.com',
-		prefix: ':linkedin:',
-		pages: {
-			company: {
-				urlPattern: /^https:\/\/www\.linkedin\.com\/company\/[^\/]+/,
-				buttonId: 'li-company-copy-button',
-				getInfo: () => {
-					const companyName = document.querySelector('h1.org-top-card-summary__title').textContent.trim()
-					const companyDescription = document.querySelector('p.org-top-card-summary__tagline').textContent.trim()
-					return { name: companyName, description: companyDescription }
-				},
-				buildMarkdown: (info, url) => `[${info.name}](${url})${info.description ? ` - ${info.description}` : ''}`,
-				buildPlaintext: (info, url) => `${info.name} - ${url}${info.description ? ` (${info.description})` : ''}`,
 			},
 		},
 	},

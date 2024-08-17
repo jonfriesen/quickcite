@@ -1,3 +1,8 @@
+import siteConfigs from './config.js'
+import '../styles/button.css'
+import clipboardSvg from '../assets/clipboard.svg'
+import checkmarkSvg from '../assets/checkmark.svg'
+
 let formatPreference = 'markdown'
 let selectedStyle = 'dark' // Default style
 
@@ -7,20 +12,10 @@ function injectButton(config) {
 	const siteConfig = siteConfigs[config.siteKey]
 	const pageConfig = siteConfig.pages[config.pageKey]
 
-	console.log('siteConfig', siteConfig)
-	console.log('pageConfig', pageConfig)
-
 	const button = document.createElement('button')
 	button.id = config.buttonId
 	button.className = `copy-button ${selectedStyle}`
-	button.innerHTML = `<img src="${chrome.runtime.getURL('dist/clipboard.svg')}" alt="Copy Info">`
-
-	// Inject the shared styles
-	const style = document.createElement('link')
-	style.rel = 'stylesheet'
-	style.type = 'text/css'
-	style.href = chrome.runtime.getURL('dist/buttons.css')
-	;(document.head || document.documentElement).appendChild(style)
+	button.innerHTML = `<img src="${chrome.runtime.getURL(clipboardSvg)}" alt="Copy Info">`
 
 	button.addEventListener('mouseenter', () => {
 		button.style.transform = 'scale(1.05)'
@@ -46,7 +41,7 @@ function injectButton(config) {
 			.then(() => {
 				console.debug('Copied to clipboard: ' + textToCopy)
 				const originalHTML = button.innerHTML
-				button.innerHTML = `<img src="${chrome.runtime.getURL('dist/checkmark.svg')}" alt="Copy Info">`
+				button.innerHTML = `<img src="${chrome.runtime.getURL(checkmarkSvg)}" alt="Copy Info">`
 				button.classList.add('success')
 				setTimeout(() => {
 					button.innerHTML = originalHTML
