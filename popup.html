@@ -5,12 +5,19 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>GitHub PR Button Injector</title>
 		<link rel="stylesheet" href="dist/styles.css" />
+		<link rel="stylesheet" href="dist/buttons.css" />
 	</head>
 	<body class="bg-gray-900 text-gray-100 p-6 w-80">
 		<h1 class="text-2xl font-bold mb-4 text-white">GitHub PR Button Injector</h1>
 		<p class="text-sm text-gray-400 mb-6">
 			This extension adds a button to GitHub PR pages that copies PR info to your clipboard.
 		</p>
+		<h3 class="text-sm font-semibold leading-6 text-white">Button Style:</h3>
+		<div id="style-options">
+			<div id="dark-style" class="style-option selected" data-style="dark"></div>
+			<div id="light-style" class="style-option" data-style="light"></div>
+			<div id="retro-style" class="style-option" data-style="retro"></div>
+		</div>
 		<fieldset>
 			<legend class="text-sm font-semibold leading-6 text-white">Format Selection</legend>
 			<p class="mt-1 text-sm leading-6 text-gray-400">Choose how you want to copy the PR info:</p>

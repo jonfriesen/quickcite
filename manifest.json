@@ -22,5 +22,11 @@
       "css": ["dist/styles.css"],
       "js": ["content.js"]
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["dist/buttons.css"],
+      "matches": ["https://github.com/*"]
+    }
   ]
 }
