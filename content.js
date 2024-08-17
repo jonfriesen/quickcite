@@ -71,7 +71,6 @@ function removeButton() {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	switch (request.action) {
 		case 'injectButton':
-			console.log('injecting button', request.formatPreference, request.prefix)
 			formatPreference = request.formatPreference
 			prefix = request.prefix
 			injectButton()
@@ -83,11 +82,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			formatPreference = request.formatPreference
 			break
 		case 'updatePrefix':
-			console.log('setting prefix', JSON.stringify(request))
 			prefix = request.prefix
 			break
 		case 'updateStyle':
-			selectedStyle = request.style
+			selectedStyle = request.buttonStyle
 			const button = document.getElementById('pr-copy-button')
 			if (button) {
 				button.className = `pr-copy-button ${selectedStyle}`

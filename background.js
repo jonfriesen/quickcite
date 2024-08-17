@@ -10,7 +10,7 @@ const tabActions = new Map()
 // Function to send a message to the content script
 function sendMessageToContentScript(tabId, action) {
 	// Get the current preferences and send them along with the action
-	chrome.storage.sync.get({ formatPreference: 'markdown', prefix: ':github:' }, (items) => {
+	chrome.storage.sync.get({ formatPreference: 'markdown', prefix: ':github:', buttonStyle: 'dark' }, (items) => {
 		if (tabActions.get(tabId) !== action) {
 			chrome.tabs.sendMessage(
 				tabId,
@@ -18,6 +18,7 @@ function sendMessageToContentScript(tabId, action) {
 					action: action,
 					formatPreference: items.formatPreference,
 					prefix: items.prefix,
+					buttonStyle: items.buttonStyle,
 				},
 				(response) => {
 					if (chrome.runtime.lastError) {
@@ -78,23 +79,33 @@ chrome.webNavigation.onReferenceFragmentUpdated.addListener(handleNavigation, {
 
 // Listen for messages from the popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-	if (request.action === 'updatePreference') {
-		chrome.storage.sync.set({ formatPreference: request.formatPreference }, () => {
-			// Notify all tabs to update the button
-			chrome.tabs.query({ url: 'https://github.com/*' }, (tabs) => {
-				tabs.forEach((tab) => {
-					sendMessageToContentScript(tab.id, 'updatePreference')
+	switch (request.action) {
+		case 'updatePreference':
+			chrome.storage.sync.set({ formatPreference: request.formatPreference }, () => {
+				chrome.tabs.query({ url: 'https://github.com/*' }, (tabs) => {
+					tabs.forEach((tab) => {
+						sendMessageToContentScript(tab.id, 'updatePreference')
+					})
 				})
 			})
-		})
-	} else if (request.action === 'updatePrefix') {
-		chrome.storage.sync.set({ prefix: request.prefix }, () => {
-			// Notify all tabs to update the button
-			chrome.tabs.query({ url: 'https://github.com/*' }, (tabs) => {
-				tabs.forEach((tab) => {
-					sendMessageToContentScript(tab.id, 'updatePrefix')
+			break
+		case 'updatePrefix':
+			chrome.storage.sync.set({ prefix: request.prefix }, () => {
+				chrome.tabs.query({ url: 'https://github.com/*' }, (tabs) => {
+					tabs.forEach((tab) => {
+						sendMessageToContentScript(tab.id, 'updatePrefix')
+					})
 				})
 			})
-		})
+			break
+		case 'updateStyle':
+			chrome.storage.sync.set({ buttonStyle: request.buttonStyle }, () => {
+				chrome.tabs.query({ url: 'https://github.com/*' }, (tabs) => {
+					tabs.forEach((tab) => {
+						sendMessageToContentScript(tab.id, 'updateStyle')
+					})
+				})
+			})
+			break
 	}
 })
