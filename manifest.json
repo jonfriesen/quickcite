@@ -7,7 +7,7 @@
     "email": "jon@jonfriesen.ca"
   },
   "permissions": ["clipboardWrite", "webNavigation", "storage"],
-  "host_permissions": ["https://github.com/*"],
+  "host_permissions": ["https://github.com/*", "https://www.instagram.com/*", "https://www.linkedin.com/*"],
   "action": {
     "default_popup": "src/popup/popup.html",
     "default_icon": {
@@ -25,14 +25,14 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://github.com/*"],
+      "matches": ["https://github.com/*", "https://www.instagram.com/*", "https://www.linkedin.com/*"],
       "js": ["src/content/content.js"]
     }
   ],
   "web_accessible_resources": [
     {
       "resources": ["assets/*"],
-      "matches": ["https://github.com/*"]
+      "matches": ["https://github.com/*", "https://www.instagram.com/*", "https://www.linkedin.com/*"]
     }
   ]
 }
