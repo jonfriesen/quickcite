@@ -1,6 +1,7 @@
 import siteConfigs from './config.js'
 import '../styles/button.css'
-import clipboardSvg from '../assets/clipboard.svg'
+import clipboardTextSvg from '../assets/clipboard.svg'
+import clipboardMdSvg from '../assets/clipboard2.svg'
 import checkmarkSvg from '../assets/checkmark.svg'
 
 let formatPreference = 'markdown'
@@ -17,8 +18,10 @@ function injectOrUpdateButton(config) {
 		document.body.appendChild(button)
 	}
 
+	let icon = formatPreference === 'markdown' ? clipboardMdSvg : clipboardTextSvg
+
 	button.className = `copy-button ${selectedStyle}`
-	button.innerHTML = `<img src="${chrome.runtime.getURL(clipboardSvg)}" alt="Copy Info">`
+	button.innerHTML = `<img src="${chrome.runtime.getURL(icon)}" alt="Copy Info">`
 
 	button.addEventListener('mouseenter', () => {
 		button.style.transform = 'scale(1.05)'
