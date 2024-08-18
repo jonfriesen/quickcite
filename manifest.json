@@ -6,6 +6,7 @@
   "author": {
     "email": "jon@quickcite.link"
   },
+  "homepage_url": "https://quickcite.link",
   "permissions": ["clipboardWrite", "webNavigation", "storage"],
   "host_permissions": ["https://github.com/*", "https://www.instagram.com/*", "https://www.linkedin.com/*"],
   "action": {
