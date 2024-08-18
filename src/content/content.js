@@ -5,15 +5,18 @@ import checkmarkSvg from '../assets/checkmark.svg'
 
 let formatPreference = 'markdown'
 let selectedStyle = 'dark' // Default style
+let userSiteConfigs = {}
+let currentConfig = null
 
-function injectButton(config) {
-	if (document.getElementById(config.buttonId)) return
+function injectOrUpdateButton(config) {
+	let button = document.getElementById(config.buttonId)
 
-	const siteConfig = siteConfigs[config.siteKey]
-	const pageConfig = siteConfig.pages[config.pageKey]
+	if (!button) {
+		button = document.createElement('button')
+		button.id = config.buttonId
+		document.body.appendChild(button)
+	}
 
-	const button = document.createElement('button')
-	button.id = config.buttonId
 	button.className = `copy-button ${selectedStyle}`
 	button.innerHTML = `<img src="${chrome.runtime.getURL(clipboardSvg)}" alt="Copy Info">`
 
@@ -26,14 +29,16 @@ function injectButton(config) {
 	})
 
 	button.addEventListener('click', () => {
+		const siteConfig = siteConfigs[config.siteKey]
+		const pageConfig = siteConfig.pages[config.pageKey]
 		const info = pageConfig.getInfo()
 		const currentUrl = window.location.href
 
 		let textToCopy
 		if (formatPreference === 'markdown') {
-			textToCopy = `${siteConfig.prefix} ${pageConfig.buildMarkdown(info, currentUrl)}`
+			textToCopy = `${config.prefix} ${pageConfig.buildMarkdown(info, currentUrl)}`
 		} else {
-			textToCopy = `${siteConfig.prefix} ${pageConfig.buildPlaintext(info, currentUrl)}`
+			textToCopy = `${config.prefix} ${pageConfig.buildPlaintext(info, currentUrl)}`
 		}
 
 		navigator.clipboard
@@ -52,8 +57,6 @@ function injectButton(config) {
 				console.error('Failed to copy text: ', err)
 			})
 	})
-
-	document.body.appendChild(button)
 }
 
 // Function to remove all buttons
@@ -65,10 +68,16 @@ function removeButtons() {
 // Listen for messages from the background script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	switch (request.action) {
-		case 'injectButton':
+		case 'updateConfig':
 			formatPreference = request.formatPreference
 			selectedStyle = request.buttonStyle
-			injectButton(request.config)
+			userSiteConfigs = request.siteConfigs
+			currentConfig = request.config
+			if (currentConfig) {
+				injectOrUpdateButton(currentConfig)
+			} else {
+				removeButtons()
+			}
 			break
 		case 'removeButtons':
 			removeButtons()
@@ -78,10 +87,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			break
 		case 'updateStyle':
 			selectedStyle = request.buttonStyle
-			const buttons = document.querySelectorAll('.copy-button')
-			buttons.forEach((button) => {
-				button.className = `copy-button ${selectedStyle}`
-			})
+			if (currentConfig) {
+				injectOrUpdateButton(currentConfig)
+			}
 			break
 	}
 })
+
+// Initial setup
+chrome.runtime.sendMessage({ action: 'checkCurrentUrl' })

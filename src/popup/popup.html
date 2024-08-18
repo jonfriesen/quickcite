@@ -5,9 +5,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Multi-Site Info Copier</title>
 	</head>
-	<body class="bg-gray-900 text-gray-100 p-6 w-80">
+	<body class="bg-gray-900 text-gray-100 p-6 w-[32rem]">
 		<h1 class="text-2xl font-bold mb-4 text-white">Multi-Site Info Copier</h1>
 		<p class="text-sm text-gray-400 mb-6">This extension adds buttons to various sites to copy formatted information to clipboard.</p>
+
 		<h3 class="text-sm font-semibold leading-6 text-white">Button Style:</h3>
 		<div id="style-options">
 			<div id="dark-style" class="style-option" data-style="dark">
@@ -20,6 +21,7 @@
 				<img src="../assets/clipboard.svg" alt="Clipboard icon" />
 			</div>
 		</div>
+
 		<fieldset class="mt-6">
 			<legend class="text-sm font-semibold leading-6 text-white">Format Selection</legend>
 			<p class="mt-1 text-sm leading-6 text-gray-400">Choose how you want to copy the PR info:</p>
@@ -34,9 +36,17 @@
 				</div>
 			</div>
 		</fieldset>
+
+		<h2 class="mt-6 text-lg font-semibold mb-2">Site Configurations:</h2>
+		<p class="mt-1 text-sm leading-6 text-gray-400">Enable or disable sites below and set a prefix for the copied information.</p>
+		<div id="site-config" class="mt-4 mb-4">
+			<!-- Site configuration will be dynamically inserted here -->
+		</div>
+
 		<div class="mt-6 text-center text-xs text-gray-500">
 			<a href="https://jonfriesen.ca" target="_blank" rel="noopener noreferrer" class="hover:text-gray-300">made by Jon</a>
 		</div>
+
 		<script type="module" src="./popup.js"></script>
 	</body>
 </html>
