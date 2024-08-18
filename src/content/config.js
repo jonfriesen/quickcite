@@ -75,6 +75,50 @@ const siteConfigs = {
 				buildMarkdown: (info, url) => `[${info.name}](${url})${info.bio ? ` - ${info.bio}` : ''}`,
 				buildPlaintext: (info, url) => `${info.name} - ${url}${info.bio ? ` (${info.bio})` : ''}`,
 			},
+			release: {
+				urlPattern: /^https:\/\/github\.com\/[^\/]+\/[^\/]+\/releases\/tag\/[^\/]+/,
+				buttonId: 'gh-release-copy-button',
+				getInfo: () => {
+					const releaseBodyElement = document.querySelector('div.Box-body')
+
+					// Get the release title
+					const titleElement = releaseBodyElement.querySelector('h1')
+					const releaseTitle = titleElement ? titleElement.textContent.trim() : ''
+
+					// Get the release tag
+					const tagSvgElement = releaseBodyElement.querySelector('svg.octicon.octicon-tag')
+					const spanElement = tagSvgElement ? tagSvgElement.nextElementSibling : null
+					const releaseTag = spanElement ? spanElement.textContent.trim() : ''
+
+					// Get the release date
+					const dateElement = releaseBodyElement.querySelector('relative-time')
+					const releaseDate = dateElement ? dateElement.getAttribute('datetime') : ''
+
+					// Build title
+					let releaseTitleAndTag = releaseTitle
+					if (releaseTitle && releaseTag !== releaseTitle) {
+						releaseTitleAndTag = `${releaseTag}: ${releaseTitle}`
+					}
+
+					// Get the release description
+					// Note: I'm not sure if I want to include the release description
+					// const descriptionElement = document.querySelector('.markdown-body')
+					// const releaseDescription = descriptionElement ? descriptionElement.textContent.trim() : ''
+
+					return {
+						title: releaseTitleAndTag,
+						date: releaseDate,
+					}
+				},
+				buildMarkdown: (info, url) => {
+					const formattedDate = info.date ? new Date(info.date).toLocaleDateString() : ''
+					return `[${info.title}](${url}) - Released on ${formattedDate}`
+				},
+				buildPlaintext: (info, url) => {
+					const formattedDate = info.date ? new Date(info.date).toLocaleDateString() : ''
+					return `${info.title} - ${url}\nReleased on ${formattedDate}`
+				},
+			},
 		},
 	},
 	instagram: {
