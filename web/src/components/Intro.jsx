@@ -74,8 +74,20 @@ export function Intro() {
 					<AnimatedGradientText>QuickCite</AnimatedGradientText>
 				</Link>
 			</div>
-			<h1 className="mt-14 font-display text-4xl/tight font-light text-white">
+			{/* <h1 className="mt-14 font-display text-4xl/tight font-light text-white">
 				A Chrome extension to build <span className="text-sky-300">context rich links</span>
+			</h1> */}
+			<h1 className="mt-14 font-display text-4xl/tight font-light text-white">
+				A{' '}
+				<span className="font-sans font-semibold tracking-tight">
+					<span className="text-blue-500">C</span>
+					<span className="text-red-400">h</span>
+					<span className="text-yellow-300">r</span>
+					<span className="text-blue-500">o</span>
+					<span className="text-green-400">m</span>
+					<span className="text-red-400">e</span>
+				</span>{' '}
+				extension to build <span className="text-sky-300">context rich links</span>
 			</h1>
 			<p className="mt-4 text-sm/6 text-gray-300">
 				QuickCite is a chrome extension designed to enhance productivity by allowing users to quickly copy formatted information from various websites, including GitHub, LinkedIn,
