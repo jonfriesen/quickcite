@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "release": "bash scripts/bump_version.sh",
+    "release_verify": "bash scripts/prerelease_check.sh"
   },
   "keywords": ["github", "pull request", "chrome extension", "productivity"],
   "author": "Jon Friesen <jon@quickcite.link>",
