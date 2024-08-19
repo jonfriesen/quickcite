@@ -43,28 +43,27 @@ function XIcon(props) {
 }
 
 const AnimatedGradientText = ({ children }) => (
-  <>
-    <style jsx>{`
-      @keyframes gradient-x {
-        0%, 100% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: -100% 50%;
-        }
-      }
-      .animate-gradient-x {
-        animation: gradient-x 3s linear infinite;
-        background-size: 200% 100%;
-      }
-    `}</style>
-    <h1 className="ml-4 font-display text-5xl font-bold tracking-tight">
-      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 to-white animate-gradient-x">
-        {children}
-      </span>
-    </h1>
-  </>
-);
+	<>
+		<style jsx>{`
+			@keyframes gradient-x {
+				0%,
+				100% {
+					background-position: 0% 50%;
+				}
+				50% {
+					background-position: -100% 50%;
+				}
+			}
+			.animate-gradient-x {
+				animation: gradient-x 3s linear infinite;
+				background-size: 200% 100%;
+			}
+		`}</style>
+		<h1 className="ml-4 font-display text-5xl font-bold tracking-tight">
+			<span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 to-white animate-gradient-x">{children}</span>
+		</h1>
+	</>
+)
 
 export function Intro() {
 	return (
@@ -72,9 +71,7 @@ export function Intro() {
 			<div>
 				<Link href="/" className="flex items-center">
 					<Logo className="h-16 rotate-90 w-auto" />
-          <AnimatedGradientText>
-            QuickCite
-          </AnimatedGradientText>
+					<AnimatedGradientText>QuickCite</AnimatedGradientText>
 				</Link>
 			</div>
 			<h1 className="mt-14 font-display text-4xl/tight font-light text-white">
