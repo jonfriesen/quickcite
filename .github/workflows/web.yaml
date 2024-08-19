@@ -5,6 +5,8 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ['main']
+    paths:
+      - 'web/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -38,9 +40,11 @@ jobs:
           node-version: '20' # specify the version of Node.js you want to use
 
       - name: Install dependencies
+        working-directory: ./web
         run: npm install
 
       - name: Build project
+        working-directory: ./web
         run: npm run build
 
       - name: Setup Pages
