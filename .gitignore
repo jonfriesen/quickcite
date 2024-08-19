@@ -6,6 +6,10 @@
 # General files
 TODO.md
 
+# Package Files
+dist.crx
+*.pem
+
 # Build files
 dist/
 build/
