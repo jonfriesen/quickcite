@@ -4,7 +4,7 @@
   "version": "1.0",
   "description": "Injects buttons on various sites to copy formatted information to clipboard",
   "author": {
-    "email": "jon@quickcite.link"
+    "email": "jon@jonfriesen.ca"
   },
   "homepage_url": "https://quickcite.link",
   "permissions": ["clipboardWrite", "webNavigation", "storage"],
