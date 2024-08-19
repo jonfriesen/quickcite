@@ -89,6 +89,10 @@ export function Intro() {
 				</span>{' '}
 				extension to build <span className="text-sky-300">context rich links</span>
 			</h1>
+			<div className="mt-6 mb-6 bg-yellow-900 border-l-4 border-yellow-600 text-yellow-200 p-4 rounded">
+				<p className="font-bold">⚠️ Extension Under Review</p>
+				<p className="text-sm">The QuickCite Chrome extension is currently under review and will be available in the Chrome Web Store soon. Thank you for your patience!</p>
+			</div>
 			<p className="mt-4 text-sm/6 text-gray-300">
 				QuickCite is a chrome extension designed to enhance productivity by allowing users to quickly copy formatted information from various websites, including GitHub, LinkedIn,
 				and Instagram.
