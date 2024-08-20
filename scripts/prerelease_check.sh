@@ -14,6 +14,9 @@ get_json_version() {
 # Get the current git tag
 git_tag=$(git describe --tags --abbrev=0)
 
+# Remove 'v' prefix from git tag for comparison
+git_tag_version=${git_tag#v}
+
 # Get the version from package.json
 package_version=$(get_json_version "./package.json")
 
@@ -30,7 +33,7 @@ tag_commit=$(git rev-list -n 1 $git_tag)
 current_commit=$(git rev-parse HEAD)
 
 # Check if all versions match
-if [ "$git_tag" = "$package_version" ] && [ "$git_tag" = "$manifest_version" ] && [ "$git_tag" = "$dist_manifest_version" ]; then
+if [ "$git_tag_version" = "$package_version" ] && [ "$git_tag_version" = "$manifest_version" ] && [ "$git_tag_version" = "$dist_manifest_version" ]; then
     echo "Version check passed: All versions match ($git_tag)"
 else
     echo "Version check failed: Versions do not match"
