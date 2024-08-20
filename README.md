@@ -63,6 +63,8 @@ Want support for more sites? Please [submit an issue](https://github.com/jonfrie
 
 After installation, the QuickCite button will appear on supported pages. Click the button to copy the formatted information to your clipboard.
 
+For frequently asked questions and user support, please refer to our [FAQ document](docs/FAQ.md).
+
 ## Development
 
 To run the extension in development mode:

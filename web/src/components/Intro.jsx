@@ -140,7 +140,7 @@ export function Intro() {
 			</p>
 			<FeedbackForm />
 			<div className="mt-8 flex flex-wrap justify-center gap-x-1 gap-y-3 sm:gap-x-2 lg:justify-start">
-				<IconLink href="https://quickcite.link" icon={BookIcon} className="flex-none">
+				<IconLink href="https://github.com/jonfriesen/quickcite/blob/main/docs/FAQ.md" icon={BookIcon} className="flex-none">
 					Documentation
 				</IconLink>
 				<IconLink href="https://github.com/jonfriesen/quickcite" icon={GitHubIcon} className="flex-none">
