@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import { crx } from '@crxjs/vite-plugin'
 import tailwindcss from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
-import manifest from './manifest.json'
+import manifest from './src/manifest.json'
 
 export default defineConfig({
 	plugins: [crx({ manifest })],

@@ -1,14 +1,22 @@
 {
   "manifest_version": 3,
   "name": "QuickCite",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "Injects buttons on various sites to copy formatted information to clipboard",
   "author": {
     "email": "jon@jonfriesen.ca"
   },
   "homepage_url": "https://quickcite.link",
-  "permissions": ["clipboardWrite", "webNavigation", "storage"],
-  "host_permissions": ["https://github.com/*", "https://www.instagram.com/*", "https://www.linkedin.com/*"],
+  "permissions": [
+    "clipboardWrite",
+    "webNavigation",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://github.com/*",
+    "https://www.instagram.com/*",
+    "https://www.linkedin.com/*"
+  ],
   "action": {
     "default_popup": "src/popup/popup.html",
     "default_icon": {
@@ -28,14 +36,26 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://github.com/*", "https://www.instagram.com/*", "https://www.linkedin.com/*"],
-      "js": ["src/content/content.js"]
+      "matches": [
+        "https://github.com/*",
+        "https://www.instagram.com/*",
+        "https://www.linkedin.com/*"
+      ],
+      "js": [
+        "src/content/content.js"
+      ]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["assets/*"],
-      "matches": ["https://github.com/*", "https://www.instagram.com/*", "https://www.linkedin.com/*"]
+      "resources": [
+        "assets/*"
+      ],
+      "matches": [
+        "https://github.com/*",
+        "https://www.instagram.com/*",
+        "https://www.linkedin.com/*"
+      ]
     }
   ]
 }

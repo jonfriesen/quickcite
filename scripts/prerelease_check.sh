@@ -18,7 +18,7 @@ git_tag=$(git describe --tags --abbrev=0)
 package_version=$(get_json_version "./package.json")
 
 # Get the version from manifest.json
-manifest_version=$(get_json_version "./manifest.json")
+manifest_version=$(get_json_version "./src/manifest.json")
 
 # Get the version from dist/manifest.json
 dist_manifest_version=$(get_json_version "./dist/manifest.json")
