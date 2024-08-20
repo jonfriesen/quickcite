@@ -123,6 +123,31 @@ const siteConfigs = {
 					return `${info.title} - ${url}\nReleased on ${formattedDate}`
 				},
 			},
+			commit: {
+				urlPattern: /^https:\/\/github\.com\/[^\/]+\/[^\/]+\/commit\/[a-f0-9]{40}$/,
+				buttonId: 'gh-commit-copy-button',
+				getInfo: () => {
+					const commitTitle = document.querySelector('.commit-title').textContent.trim()
+					const commitHash = document.querySelector('.sha.user-select-contain').textContent.trim()
+					const authorName = document.querySelector('.commit-author').textContent.trim()
+					const commitDate = document.querySelector('relative-time').getAttribute('datetime')
+
+					return {
+						title: commitTitle,
+						hash: commitHash,
+						author: authorName,
+						date: commitDate,
+					}
+				},
+				buildMarkdown: (info, url) => {
+					const formattedDate = new Date(info.date).toLocaleString()
+					return `[(${info.hash.slice(0, 7)}) - ${info.title}](${url})\nBy ${info.author} on ${formattedDate}`
+				},
+				buildPlaintext: (info, url) => {
+					const formattedDate = new Date(info.date).toLocaleString()
+					return `(${info.hash.slice(0, 7)}) -${info.title}\nBy ${info.author} on ${formattedDate}\n${url}`
+				},
+			},
 		},
 	},
 	instagram: {
