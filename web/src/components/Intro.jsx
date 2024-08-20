@@ -6,6 +6,7 @@ import { IconLink } from '@/components/IconLink'
 import { Logo } from '@/components/Logo'
 import { FeedbackForm } from '@/components/FeedbackForm'
 import { IconLoading } from '@/components/IconLoading'
+import { YouTubeVideoButton } from '@/components/YouTubeVideoButton'
 
 function BookIcon(props) {
 	return (
@@ -99,6 +100,9 @@ export function Intro() {
 					The QuickCite Chrome extension is currently stuck in Google&apos;s review purgatory. We&apos;re as impatient as you are for it to grace the Chrome Web Store. Thanks for
 					hanging in there while Google takes their sweet time!
 				</p>
+			</div>
+			<div className="flex justify-center items-center">
+				<YouTubeVideoButton videoUrl="https://youtu.be/CCF5vnF3Dmw" />
 			</div>
 			<p className="mt-4 text-sm/6 text-gray-300">
 				QuickCite is a chrome extension designed to enhance productivity by allowing users to quickly copy formatted information from various websites, including GitHub, LinkedIn,

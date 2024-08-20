@@ -45,7 +45,11 @@ const siteConfigs = {
 				urlPattern: /^https:\/\/github\.com\/[^\/]+\/[^\/]+\/?$/,
 				buttonId: 'gh-repo-copy-button',
 				getInfo: () => {
-					const repo = document.title.split(':')[0].trim() || document.querySelector('div.AppHeader-context-full').textContent.trim()
+					let repo = document.title.split(':')[0].trim() || document.querySelector('div.AppHeader-context-full').textContent.trim()
+					// if repo starts with "GitHub - " then remove it
+					if (repo.startsWith('GitHub - ')) {
+						repo = repo.substring(9)
+					}
 					const repoDescription = document.querySelector('p.f4.my-3').textContent.trim()
 					return { title: repo, description: repoDescription }
 				},
