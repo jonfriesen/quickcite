@@ -1,6 +1,6 @@
 {
   "name": "quickcite",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A Chrome extension to copy GitHub pull request information",
   "main": "background.js",
   "scripts": {
@@ -10,7 +10,12 @@
     "release": "bash scripts/bump_version.sh",
     "release_verify": "bash scripts/prerelease_check.sh"
   },
-  "keywords": ["github", "pull request", "chrome extension", "productivity"],
+  "keywords": [
+    "github",
+    "pull request",
+    "chrome extension",
+    "productivity"
+  ],
   "author": "Jon Friesen <jon@quickcite.link>",
   "license": "UNLICENSED",
   "private": true,
