@@ -102,7 +102,7 @@ export function Intro() {
 			</div>
 
 			<div className="flex justify-center items-center">
-				<YouTubeVideoButton videoUrl="https://youtu.be/CCF5vnF3Dmw" />
+				<YouTubeVideoButton videoUrl="https://www.youtube.com/watch?v=CCF5vnF3Dmw" />
 			</div>
 			<p className="mt-4 text-sm/6 text-gray-300">
 				QuickCite is a chrome extension designed to enhance productivity by allowing users to quickly copy formatted information from various websites, including GitHub, LinkedIn,
