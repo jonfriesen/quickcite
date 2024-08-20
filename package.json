@@ -1,6 +1,6 @@
 {
   "name": "quickcite",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "A Chrome extension to copy GitHub pull request information",
   "main": "background.js",
   "scripts": {
