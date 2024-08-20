@@ -91,16 +91,16 @@ export function Intro() {
 				</span>{' '}
 				extension to build <span className="text-sky-300">context rich links</span>
 			</h1>
-			<div className="mt-6 mb-6 bg-yellow-900 border-l-4 border-yellow-600 text-yellow-200 p-4 rounded">
+			<div className="mt-6 mb-6 bg-blue-600 border-l-4 border-blue-400 text-blue-200 p-4 rounded">
 				<div className="flex items-center">
-					<IconLoading className="mr-2 h-4 w-4 flex-none" />
+					<IconLoading className="mr-2 h-4 w-4 flex-none text-blue-400" />
 					<p className="font-bold">Extension Under Review</p>
 				</div>
 				<p className="text-sm">
-					The QuickCite Chrome extension is currently stuck in Google&apos;s review purgatory. We&apos;re as impatient as you are for it to grace the Chrome Web Store. Thanks for
-					hanging in there while Google takes their sweet time!
+					The QuickCite Chrome extension is stuck in Google&apos;s review limbo. We&apos;re eager to get it live—thanks for your patience while Google takes its time!
 				</p>
 			</div>
+
 			<div className="flex justify-center items-center">
 				<YouTubeVideoButton videoUrl="https://youtu.be/CCF5vnF3Dmw" />
 			</div>
