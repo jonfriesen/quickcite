@@ -3,9 +3,11 @@
 import Link from 'next/link'
 
 import { IconLink } from '@/components/IconLink'
+import { IconChrome } from '@/components/IconChrome'
 import { Logo } from '@/components/Logo'
 import { FeedbackForm } from '@/components/FeedbackForm'
-import { IconLoading } from '@/components/IconLoading'
+// import { IconLoading } from '@/components/IconLoading'
+import { Button } from '@/components/Button'
 import { YouTubeVideoButton } from '@/components/YouTubeVideoButton'
 
 function BookIcon(props) {
@@ -24,17 +26,17 @@ function GitHubIcon(props) {
 	)
 }
 
-function FeedIcon(props) {
-	return (
-		<svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor" {...props}>
-			<path
-				fillRule="evenodd"
-				clipRule="evenodd"
-				d="M2.5 3a.5.5 0 0 1 .5-.5h.5c5.523 0 10 4.477 10 10v.5a.5.5 0 0 1-.5.5h-.5a.5.5 0 0 1-.5-.5v-.5A8.5 8.5 0 0 0 3.5 4H3a.5.5 0 0 1-.5-.5V3Zm0 4.5A.5.5 0 0 1 3 7h.5A5.5 5.5 0 0 1 9 12.5v.5a.5.5 0 0 1-.5.5H8a.5.5 0 0 1-.5-.5v-.5a4 4 0 0 0-4-4H3a.5.5 0 0 1-.5-.5v-.5Zm0 5a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
-			/>
-		</svg>
-	)
-}
+// function FeedIcon(props) {
+// 	return (
+// 		<svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor" {...props}>
+// 			<path
+// 				fillRule="evenodd"
+// 				clipRule="evenodd"
+// 				d="M2.5 3a.5.5 0 0 1 .5-.5h.5c5.523 0 10 4.477 10 10v.5a.5.5 0 0 1-.5.5h-.5a.5.5 0 0 1-.5-.5v-.5A8.5 8.5 0 0 0 3.5 4H3a.5.5 0 0 1-.5-.5V3Zm0 4.5A.5.5 0 0 1 3 7h.5A5.5 5.5 0 0 1 9 12.5v.5a.5.5 0 0 1-.5.5H8a.5.5 0 0 1-.5-.5v-.5a4 4 0 0 0-4-4H3a.5.5 0 0 1-.5-.5v-.5Zm0 5a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
+// 			/>
+// 		</svg>
+// 	)
+// }
 
 function XIcon(props) {
 	return (
@@ -76,10 +78,8 @@ export function Intro() {
 					<AnimatedGradientText>QuickCite</AnimatedGradientText>
 				</Link>
 			</div>
-			{/* <h1 className="mt-14 font-display text-4xl/tight font-light text-white">
-				A Chrome extension to build <span className="text-sky-300">context rich links</span>
-			</h1> */}
-			<h1 className="mt-14 font-display text-4xl/tight font-light text-white">
+
+			<h1 className="mt-14 mb-6 font-display text-4xl/tight font-light text-white">
 				A{' '}
 				<span className="font-sans font-semibold tracking-tight">
 					<span className="text-blue-500">C</span>
@@ -91,7 +91,7 @@ export function Intro() {
 				</span>{' '}
 				extension to build <span className="text-sky-300">context rich links</span>
 			</h1>
-			<div className="mt-6 mb-6 bg-blue-600 border-l-4 border-blue-400 text-blue-200 p-4 rounded">
+			{/* <div className="mt-6 mb-6 bg-blue-600 border-l-4 border-blue-400 text-blue-200 p-4 rounded">
 				<div className="flex items-center">
 					<IconLoading className="mr-2 h-4 w-4 flex-none text-blue-400" />
 					<p className="font-bold">Extension Under Review</p>
@@ -99,12 +99,21 @@ export function Intro() {
 				<p className="text-sm">
 					The QuickCite Chrome extension is stuck in Google&apos;s review limbo. We&apos;re eager to get it live—thanks for your patience while Google takes its time!
 				</p>
+			</div> */}
+
+			<div className="flex gap-6 justify-center items-center">
+				<YouTubeVideoButton videoUrl="https://www.youtube.com/watch?v=CCF5vnF3Dmw" />
+				<Button
+					className="transition duration-300 flex items-center"
+					arrow
+					href="https://chromewebstore.google.com/detail/quickcite/bdkbkefnpcenapogkehakcgmffjbbkif"
+					target="_blank">
+					<IconChrome className="h-5 w-auto flex-none mr-2" />
+					<span className="mr-2">Add to Chrome</span>
+				</Button>
 			</div>
 
-			<div className="flex justify-center items-center">
-				<YouTubeVideoButton videoUrl="https://www.youtube.com/watch?v=CCF5vnF3Dmw" />
-			</div>
-			<p className="mt-4 text-sm/6 text-gray-300">
+			<p className="mt-6 text-sm/6 text-gray-300">
 				QuickCite is a chrome extension designed to enhance productivity by allowing users to quickly copy formatted information from various websites, including GitHub, LinkedIn,
 				and Instagram.
 			</p>
