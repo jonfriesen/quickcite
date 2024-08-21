@@ -2,6 +2,8 @@
 
 QuickCite is a Chrome extension designed to enhance productivity by allowing users to quickly copy formatted information from various websites, including GitHub, LinkedIn, and Instagram.
 
+## ✨ [Add to Chrome](https://chromewebstore.google.com/detail/quickcite/bdkbkefnpcenapogkehakcgmffjbbkif) ✨
+
 ## Table of Contents
 
 - [Features](#features)
