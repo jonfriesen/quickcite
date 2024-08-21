@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "QuickCite",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Injects buttons on various sites to copy formatted information to clipboard",
   "author": {
     "email": "jon@jonfriesen.ca"
