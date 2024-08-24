@@ -6,18 +6,7 @@ QuickCite is a Chrome extension designed to enhance productivity by allowing use
 
 ## Table of Contents
 
-- [Features](#features)
-  - [Supported Websites](#supported-websites)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Development](#development)
-- [Building](#building)
-- [Installing the Unpacked Extension in Chrome](#installing-the-unpacked-extension-in-chrome)
-- [Releasing](#releasing)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+[[_TOC_]]
 
 ## Features
 
