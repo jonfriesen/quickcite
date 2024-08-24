@@ -2,11 +2,7 @@
 
 QuickCite is a Chrome extension designed to enhance productivity by allowing users to quickly copy formatted information from various websites, including GitHub, LinkedIn, and Instagram.
 
-## ✨ [Add to Chrome](https://chromewebstore.google.com/detail/quickcite/bdkbkefnpcenapogkehakcgmffjbbkif) ✨
-
-## Table of Contents
-
-[[_TOC_]]
+<h2 style="font-size: 1.5em; font-weight: normal;">✨ <a href="https://chromewebstore.google.com/detail/quickcite/bdkbkefnpcenapogkehakcgmffjbbkif">Add to Chrome</a> ✨</h2>
 
 ## Features
 
@@ -56,7 +52,7 @@ After installation, the QuickCite button will appear on supported pages. Click t
 
 For frequently asked questions and user support, please refer to our [FAQ document](docs/FAQ.md).
 
-## Development
+### Development
 
 To run the extension in development mode:
 
@@ -68,7 +64,7 @@ This will start the Vite development server and watch for file changes.
 
 **Note:** Hot Module Reload (HMR) in this project is inconsistent and often only works for the content and popup sections. You may need to manually refresh the extension or the page to see changes in other parts of the extension.
 
-## Building
+### Building
 
 To build the extension for production:
 
@@ -78,7 +74,7 @@ npm run build
 
 This will create a production-ready build in the `dist` directory.
 
-## Installing the Unpacked Extension in Chrome
+### Installing the Unpacked Extension in Chrome
 
 After building the extension, follow these steps to install it as an unpacked extension in Chrome:
 
@@ -90,7 +86,7 @@ After building the extension, follow these steps to install it as an unpacked ex
 
 **Note:** When you make changes to the extension, you'll need to rebuild it and then click the "**Reload**" button on the extension card in `chrome://extensions/` to update the installed version.
 
-## Releasing
+### Releasing
 
 To release a new version of the extension, run the following command:
 
