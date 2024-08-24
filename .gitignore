@@ -13,6 +13,7 @@ dist.crx
 # Build files
 dist/
 build/
+test-results/
 
 # Thumbnails
 ._*
