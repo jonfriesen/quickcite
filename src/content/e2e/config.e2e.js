@@ -1,5 +1,6 @@
 import { test as base, expect } from '@playwright/test'
-import siteConfigs from './config.js'
+import { e2eTestUrls } from './targets.js'
+import siteConfigs from '../config.js'
 
 // Define a common user agent
 const COMMON_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -51,24 +52,7 @@ for (const [siteName, siteConfig] of Object.entries(siteConfigs)) {
 
 	for (const [pageName, pageConfig] of Object.entries(siteConfig.pages)) {
 		test(`${siteName} - ${pageName}`, async ({ page }) => {
-			const testUrls = {
-				github: {
-					pr: 'https://github.com/microsoft/playwright/pull/20635',
-					issue: 'https://github.com/microsoft/playwright/issues/20636',
-					discussion: 'https://github.com/golang/go/discussions/61669',
-					repo: 'https://github.com/microsoft/playwright',
-					user: 'https://github.com/microsoft',
-					release: 'https://github.com/microsoft/playwright/releases/tag/v1.32.3',
-					commit: 'https://github.com/golang/go/commit/96d8ff00c2d6a88384863a656fb5e53716b614d3',
-					actions: 'https://github.com/jonfriesen/quickcite/actions/runs/10446232111',
-				},
-				instagram: {
-					profile: 'https://www.instagram.com/jonfriesen/',
-				},
-				trello: {
-					board: 'https://trello.com/b/AwYSWOyt/ultimate-to-do-list',
-				},
-			}
+			const testUrls = e2eTestUrls
 
 			const testUrl = testUrls[siteName][pageName]
 			await testPageConfig(page, testUrl, pageConfig)

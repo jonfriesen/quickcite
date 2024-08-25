@@ -9,7 +9,7 @@
     "build": "vite build",
     "release": "bash scripts/bump_version.sh",
     "release_verify": "bash scripts/prerelease_check.sh",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --testPathIgnorePatterns=\\.e2e\\.test\\.js$",
+    "test": "NODE_NO_WARNINGS=1 node --experimental-vm-modules node_modules/jest/bin/jest.js --testPathIgnorePatterns=\\.e2e\\.test\\.js$",
     "e2e": "playwright test"
   },
   "keywords": [
