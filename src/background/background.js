@@ -128,3 +128,13 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 		checkCurrentUrlAndUpdateButton(tabId, tab.url)
 	}
 })
+
+// Enable debug in development
+chrome.management.getSelf(function (info) {
+	if (info.installType === 'development') {
+		console.log('QuickCite - verbose logging enabled')
+		console.debug = console.log // Enable debug in development
+	} else {
+		console.debug = function () {} // Disable in production
+	}
+})

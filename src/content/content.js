@@ -97,5 +97,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	}
 })
 
+// Enable debug in development
+if (!('update_url' in chrome.runtime.getManifest())) {
+	console.log('QuickCite - verbose logging enabled')
+	console.debug = console.log // Enable debug in development
+} else {
+	console.debug = function () {} // Disable in production
+}
+
 // Initial setup
 chrome.runtime.sendMessage({ action: 'checkCurrentUrl' })
