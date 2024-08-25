@@ -1,6 +1,6 @@
 import fs from 'fs/promises'
 import path from 'path'
-import siteConfigs from '../src/content/config.js'
+import siteConfigs from '../src/content/sites/config.js'
 
 async function generateSupportedSitesMarkdown() {
 	let markdownContent = '<!-- DO NOT EDIT; FILE IS GENERATED -->\n\n'

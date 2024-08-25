@@ -1,4 +1,4 @@
-import siteConfigs from '../content/config.js'
+import siteConfigs from '../content/sites/config.js'
 
 // Function to check if the URL matches any of our configured patterns
 function getMatchingConfig(url, userSiteConfigs) {
