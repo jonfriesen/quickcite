@@ -22,6 +22,17 @@ jobs:
       - name: Run unit tests
         run: npm run test
 
+      - name: Generate docs and check for changes
+        run: |
+          npm run generate-docs
+          if git diff --exit-code docs/SUPPORTED_SITES.md; then
+            echo "No changes detected in SUPPORTED_SITES.md"
+          else
+            echo "SUPPORTED_SITES.md is out of date. Please run 'npm run generate-docs' and commit the changes."
+            git diff docs/SUPPORTED_SITES.md
+            exit 1
+          fi
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 

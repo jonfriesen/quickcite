@@ -11,28 +11,7 @@ QuickCite is a Chrome extension designed to enhance productivity by allowing use
 - Configurable site-specific prefixes
 - Enable/disable functionality for specific sites
 
-### Supported Websites
-
-Want support for more sites? Please [submit an issue](https://github.com/jonfriesen/quickcite/issues) to request additional website support!
-
-| Website       | Sub-page          |
-| ------------- | ----------------- |
-| **GitHub**    |                   |
-|               | Pull Request      |
-|               | Issue             |
-|               | Discussion        |
-|               | Repository        |
-|               | User/Organization |
-|               | Release           |
-|               | Actions           |
-| **Instagram** |                   |
-|               | Profile           |
-| **LinkedIn**  |                   |
-|               | Profile           |
-|               | Company           |
-|               | Pulse Article     |
-| **Trello**    |                   |
-|               | Boards            |
+For a detailed list of supported websites and features, please see our [Supported Sites](docs/SUPPORTED_SITES.md) document.
 
 ## Installation
 
