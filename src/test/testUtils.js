@@ -1,4 +1,4 @@
-import siteConfigs from '../config'
+import siteConfigs from '../content/config'
 
 export function runUrlPatternTests(siteName, testCases) {
 	describe(`${siteName} URL pattern tests`, () => {

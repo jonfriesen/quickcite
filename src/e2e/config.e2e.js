@@ -1,6 +1,6 @@
 import { test as base, expect } from '@playwright/test'
 import { e2eTestUrls } from './targets.js'
-import siteConfigs from '../config.js'
+import siteConfigs from '../content/config.js'
 
 // Define a common user agent
 const COMMON_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -45,17 +45,15 @@ async function testPageConfig(page, url, config) {
 	expect(plaintext).toBeTruthy()
 }
 
-// Test cases for each site and page type
-for (const [siteName, siteConfig] of Object.entries(siteConfigs)) {
-	// LinkedIn is hard to test because it requires auth
-	if (siteName === 'linkedin') continue
+// Run for test cases
+for (const [siteName, sitePages] of Object.entries(e2eTestUrls)) {
+	for (const [pageName, testUrl] of Object.entries(sitePages)) {
+		if (siteConfigs[siteName] && siteConfigs[siteName].pages[pageName]) {
+			const pageConfig = siteConfigs[siteName].pages[pageName]
 
-	for (const [pageName, pageConfig] of Object.entries(siteConfig.pages)) {
-		test(`${siteName} - ${pageName}`, async ({ page }) => {
-			const testUrls = e2eTestUrls
-
-			const testUrl = testUrls[siteName][pageName]
-			await testPageConfig(page, testUrl, pageConfig)
-		})
+			test(`${siteName} - ${pageName}`, async ({ page }) => {
+				await testPageConfig(page, testUrl, pageConfig)
+			})
+		}
 	}
 }
