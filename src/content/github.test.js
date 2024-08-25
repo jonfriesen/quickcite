@@ -10,6 +10,11 @@ describe('GitHub URL pattern tests', () => {
 		{ page: 'release', url: 'https://github.com/user/repo/releases/tag/v1.0.0', shouldMatch: true },
 		{ page: 'commit', url: 'https://github.com/user/repo/commit/1234567890123456789012345678901234567890', shouldMatch: true },
 		{ page: 'pr', url: 'https://github.com/user/repo', shouldMatch: false },
+		{ page: 'actions', url: 'https://github.com/jonfriesen/quickcite/actions/runs/10476888027', shouldMatch: true },
+		{ page: 'actions', url: 'https://github.com/octocat/Hello-World/actions/runs/12345678', shouldMatch: true },
+		{ page: 'actions', url: 'https://github.com/octocat/Hello-World/actions', shouldMatch: false },
+		{ page: 'actions', url: 'https://github.com/octocat/Hello-World/actions/runs/abcdefgh', shouldMatch: false },
+		{ page: 'actions', url: 'https://github.com/octocat/Hello-World/actions/runs/abcdefgh/job/12345678', shouldMatch: false },
 	]
 
 	test.each(testCases)('$page: $url should ${shouldMatch ? "match" : "not match"}', ({ page, url, shouldMatch }) => {
@@ -23,6 +28,18 @@ describe('GitHub URL pattern tests', () => {
 })
 
 describe('GitHub markdown generator tests', () => {
+	const mockGetStatusEmoji = (status) => {
+		const statusMap = {
+			Queued: '⏳',
+			'In progress': '🔄',
+			Success: '✅',
+			Failure: '❌',
+			Cancelled: '🚫',
+			Skipped: '⏭️',
+		}
+		return statusMap[status] || ''
+	}
+
 	const markdownTestCases = [
 		{
 			page: 'pr',
@@ -65,6 +82,24 @@ describe('GitHub markdown generator tests', () => {
 			info: { title: 'Update README.md', hash: '1234567890abcdef', author: 'John Doe', date: '2023-05-01T00:00:00Z' },
 			url: 'https://github.com/user/repo/commit/1234567890abcdef',
 			expected: '[(1234567) - Update README.md](https://github.com/user/repo/commit/1234567890abcdef)\nBy John Doe on ' + new Date('2023-05-01T00:00:00Z').toLocaleString(),
+		},
+		{
+			page: 'actions',
+			info: { repoOwner: 'jonfriesen', repoName: 'quickcite', workflowName: 'CI', runNumber: '#1234', runStatus: 'Success', statusEmoji: '✅' },
+			url: 'https://github.com/jonfriesen/quickcite/actions/runs/10476888027',
+			expected: '[jonfriesen/quickcite: CI #1234 ✅ (Success)](https://github.com/jonfriesen/quickcite/actions/runs/10476888027)',
+		},
+		{
+			page: 'actions',
+			info: { repoOwner: 'octocat', repoName: 'Hello-World', workflowName: 'Build', runNumber: '#5678', runStatus: 'Failure', statusEmoji: '❌' },
+			url: 'https://github.com/octocat/Hello-World/actions/runs/12345678',
+			expected: '[octocat/Hello-World: Build #5678 ❌ (Failure)](https://github.com/octocat/Hello-World/actions/runs/12345678)',
+		},
+		{
+			page: 'actions',
+			info: { repoOwner: 'test', repoName: 'repo', workflowName: 'Deploy', runNumber: '#9012', runStatus: 'In progress', statusEmoji: '🔄' },
+			url: 'https://github.com/test/repo/actions/runs/90123456',
+			expected: '[test/repo: Deploy #9012 🔄 (In progress)](https://github.com/test/repo/actions/runs/90123456)',
 		},
 	]
 

@@ -148,6 +148,68 @@ const siteConfigs = {
 					return `(${info.hash.slice(0, 7)}) -${info.title}\nBy ${info.author} on ${formattedDate}\n${url}`
 				},
 			},
+			actions: {
+				urlPattern: /^https:\/\/github\.com\/[^\/]+\/[^\/]+\/actions\/runs\/\d+$/,
+				buttonId: 'gh-action-run-copy-button',
+				getInfo: () => {
+					const getStatus = () => {
+						const statusLabel = Array.from(document.querySelectorAll('span.mb-1.d-block.text-small.color-fg-muted')).find((el) => el.textContent.trim() === 'Status')
+
+						if (statusLabel) {
+							// If found, get the next sibling span which contains the status value
+							const statusValue = statusLabel.nextElementSibling
+							if (statusValue && statusValue.classList.contains('h4') && statusValue.classList.contains('color-fg-default')) {
+								return statusValue.textContent.trim()
+							}
+						}
+						return null
+					}
+					const getStatusEmoji = (status) => {
+						const statusMap = {
+							Queued: '⏳',
+							'In progress': '🔄',
+							Success: '✅',
+							Failure: '❌',
+							Cancelled: '🚫',
+							Skipped: '⏭️',
+						}
+						return statusMap[status] || ''
+					}
+					const extractRepoInfo = (str) => {
+						const parts = str.split('·').map((part) => part.trim())
+
+						if (parts.length >= 2) {
+							const repoInfo = parts[1].split('/')
+							if (repoInfo.length >= 2) {
+								const [name, hash] = repoInfo[1].split('@')
+								return {
+									owner: repoInfo[0],
+									name: name,
+									hash: hash || null, // In case there's no hash
+								}
+							}
+						}
+
+						return null
+					}
+
+					// Test the function
+					const repoInfo = extractRepoInfo(document.title)
+					const workflowName = document.querySelector('h1.PageHeader-title span.markdown-title').textContent.trim()
+					const runNumber = document.querySelector('h1.PageHeader-title span.color-fg-muted').textContent.trim()
+					const runStatus = getStatus()
+					const repoOwner = repoInfo.owner
+					const repoName = repoInfo.name
+					const statusEmoji = getStatusEmoji(runStatus)
+					return { workflowName, runStatus, runNumber, repoName, repoOwner, statusEmoji }
+				},
+				buildMarkdown: (info, url) => {
+					return `[${info.repoOwner}/${info.repoName}: ${info.workflowName} ${info.runNumber} ${info.statusEmoji} (${info.runStatus})](${url})`
+				},
+				buildPlaintext: (info, url) => {
+					return `${info.repoOwner}/${info.repoName}: ${info.workflowName} ${info.runNumber} ${info.statusEmoji} (${info.runStatus}) - ${url}`
+				},
+			},
 		},
 	},
 	instagram: {

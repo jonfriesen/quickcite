@@ -24,6 +24,7 @@ Want support for more sites? Please [submit an issue](https://github.com/jonfrie
 |               | Repository        |
 |               | User/Organization |
 |               | Release           |
+|               | Actions           |
 | **Instagram** |                   |
 |               | Profile           |
 | **LinkedIn**  |                   |

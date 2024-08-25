@@ -123,7 +123,7 @@ export function Intro() {
 						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
 					</svg>
 					<span>
-						GitHub - <span className="text-xs text-gray-400">Pull Requests, Issues, Repositories, Discussions, Releases, Users/Orgs</span>
+						GitHub - <span className="text-xs text-gray-400">Pull Requests, Issues, Repositories, Discussions, Releases, Users/Orgs, Actions</span>
 					</span>
 				</li>
 				<li className="flex items-start">
