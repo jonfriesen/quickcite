@@ -8,11 +8,7 @@ QuickCite is a Chrome extension that allows you to quickly copy formatted inform
 
 ### Which websites does QuickCite support?
 
-Currently, QuickCite supports:
-
-- GitHub (repositories, issues, pull requests, discussions, user profiles)
-- LinkedIn (user profiles, company pages, articles)
-- Instagram (user profiles)
+See our [Supported Sites](SUPPORTED_SITES.md) document.
 
 ### How do I use QuickCite?
 
