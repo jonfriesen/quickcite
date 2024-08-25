@@ -30,6 +30,8 @@ Want support for more sites? Please [submit an issue](https://github.com/jonfrie
 |               | Profile           |
 |               | Company           |
 |               | Pulse Article     |
+| **Trello**    |                   |
+|               | Boards            |
 
 ## Installation
 

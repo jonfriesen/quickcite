@@ -17,6 +17,7 @@ const test = base.extend({
 // Helper function to test a specific page configuration
 async function testPageConfig(page, url, config) {
 	await page.goto(url)
+	await page.waitForLoadState('domcontentloaded')
 
 	// Execute the getInfo function in the browser context
 	const info = await page.evaluate(config.getInfo)
@@ -56,6 +57,9 @@ for (const [siteName, siteConfig] of Object.entries(siteConfigs)) {
 				},
 				instagram: {
 					profile: 'https://www.instagram.com/jonfriesen/',
+				},
+				trello: {
+					board: 'https://trello.com/b/AwYSWOyt/ultimate-to-do-list',
 				},
 			}
 

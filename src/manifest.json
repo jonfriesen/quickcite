@@ -15,7 +15,8 @@
   "host_permissions": [
     "https://github.com/*",
     "https://www.instagram.com/*",
-    "https://www.linkedin.com/*"
+    "https://www.linkedin.com/*",
+    "https://trello.com/*"
   ],
   "action": {
     "default_popup": "src/popup/popup.html",
@@ -39,7 +40,8 @@
       "matches": [
         "https://github.com/*",
         "https://www.instagram.com/*",
-        "https://www.linkedin.com/*"
+        "https://www.linkedin.com/*",
+        "https://trello.com/*"
       ],
       "js": [
         "src/content/content.js"
@@ -54,7 +56,8 @@
       "matches": [
         "https://github.com/*",
         "https://www.instagram.com/*",
-        "https://www.linkedin.com/*"
+        "https://www.linkedin.com/*",
+        "https://trello.com/*"
       ]
     }
   ]

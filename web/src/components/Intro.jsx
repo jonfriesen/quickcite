@@ -142,6 +142,14 @@ export function Intro() {
 						Instagram - <span className="text-xs text-gray-400">Profiles</span>
 					</span>
 				</li>
+				<li className="flex items-start">
+					<svg className="mr-2 mt-0.5 h-4 w-4 flex-shrink-0 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+					</svg>
+					<span>
+						Trello - <span className="text-xs text-gray-400">Boards, (Cards coming soon!)</span>
+					</span>
+				</li>
 			</ul>
 			<p className="mt-4 text-xs text-gray-400">
 				I&apos;d like to continue to improve and expand our site catalog. If you have suggestions for new sites to support or encounter any bugs, please let us know using the form
