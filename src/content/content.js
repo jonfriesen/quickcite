@@ -1,5 +1,4 @@
 import siteConfigs from './sites/config.js'
-import '../styles/button.css'
 import { setupMessageListener, checkCurrentUrl } from './messageHandler.js'
 
 // Global state

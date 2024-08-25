@@ -1,22 +1,59 @@
 import clipboardTextSvg from '../assets/clipboard.svg'
 import clipboardMdSvg from '../assets/clipboard2.svg'
 import checkmarkSvg from '../assets/checkmark.svg'
+import buttonStyle from '../styles/button.css?raw'
+
+function createShadowDomButton(config, formatPreference, selectedStyle) {
+	const wrapper = document.createElement('div')
+	wrapper.id = `${config.buttonId}-wrapper`
+	wrapper.className = `quickcite-button-wrapper`
+	wrapper.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 9999;
+    `
+
+	const shadowRoot = wrapper.attachShadow({ mode: 'open' })
+
+	const button = document.createElement('button')
+	button.id = config.buttonId
+
+	// Inline the CSS directly in the Shadow DOM
+	const style = document.createElement('style')
+	style.textContent = buttonStyle // Assuming buttonStyle contains the full CSS content
+
+	shadowRoot.appendChild(style)
+	shadowRoot.appendChild(button)
+
+	return { wrapper, button }
+}
 
 export function injectOrUpdateButton(config, formatPreference, selectedStyle, siteConfigs) {
-	let button = document.getElementById(config.buttonId)
+	let wrapper = document.getElementById(`${config.buttonId}-wrapper`)
+	let button
 
-	if (!button) {
-		button = document.createElement('button')
-		button.id = config.buttonId
-		document.body.appendChild(button)
+	if (!wrapper) {
+		const { wrapper: newWrapper, button: newButton } = createShadowDomButton(config, formatPreference, selectedStyle)
+		document.body.appendChild(newWrapper)
+		wrapper = newWrapper
+		button = newButton
+	} else {
+		button = wrapper.shadowRoot.getElementById(config.buttonId)
+		button.removeEventListener('click', button.clickHandler)
 	}
 
+	// sets the button details
 	let icon = formatPreference === 'markdown' ? clipboardMdSvg : clipboardTextSvg
-
 	button.className = `copy-button ${selectedStyle}`
 	button.innerHTML = `<img src="${chrome.runtime.getURL(icon)}" alt="Copy Info">`
 
-	button.addEventListener('click', () => handleButtonClick(config, formatPreference, siteConfigs, button))
+	// We inject the clickHandler on the button so that in the event of config change
+	// it can be removed, since we need a reference to it.
+	button.clickHandler = () => handleButtonClick(config, formatPreference, siteConfigs, button)
+
+	// Add the new click event listener
+	button.addEventListener('click', button.clickHandler)
 }
 
 function handleButtonClick(config, formatPreference, siteConfigs, button) {
@@ -50,6 +87,6 @@ function updateButtonAfterCopy(button) {
 }
 
 export function removeButtons() {
-	const buttons = document.querySelectorAll('.copy-button')
-	buttons.forEach((button) => button.remove())
+	const wrappers = document.querySelectorAll('.quickcite-button-wrapper')
+	wrappers.forEach((wrapper) => wrapper.remove())
 }
