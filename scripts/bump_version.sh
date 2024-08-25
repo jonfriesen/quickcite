@@ -62,7 +62,7 @@ node -e "
 
 # Commit the changes for package.json and manifest.json
 echo "Committing changes..."
-git add package.json src/manifest.json
+git add package.json package-lock.json src/manifest.json
 git commit -m "Bump version to $NEW_VERSION"
 
 # Create a new Git tag for the version
