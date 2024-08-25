@@ -1,7 +1,7 @@
 import '../styles/main.css'
 import '../styles/button.css'
 import './popup.css'
-import siteConfigs from '../content/config.js'
+import siteConfigs from '../content/sites/config.js'
 
 document.addEventListener('DOMContentLoaded', () => {
 	// Load current preferences and site configurations
