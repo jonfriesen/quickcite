@@ -23,14 +23,6 @@ function injectOrUpdateButton(config) {
 	button.className = `copy-button ${selectedStyle}`
 	button.innerHTML = `<img src="${chrome.runtime.getURL(icon)}" alt="Copy Info">`
 
-	button.addEventListener('mouseenter', () => {
-		button.style.transform = 'scale(1.05)'
-	})
-
-	button.addEventListener('mouseleave', () => {
-		button.style.transform = 'scale(1)'
-	})
-
 	button.addEventListener('click', () => {
 		const siteConfig = siteConfigs[config.siteKey]
 		const pageConfig = siteConfig.pages[config.pageKey]

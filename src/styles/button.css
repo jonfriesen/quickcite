@@ -97,6 +97,10 @@
 	border-color: var(--retro-success-border);
 }
 
+.copy-button:hover {
+	transform: scale(1.05);
+}
+
 /* Styles for popup */
 .style-option {
 	display: inline-flex;
