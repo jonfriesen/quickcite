@@ -27,7 +27,13 @@ async function testPageConfig(page, url, config) {
 
 	// Verify that all expected properties are present and non-empty
 	for (const key in info) {
-		expect(info[key]).toBeTruthy()
+		expect(info[key]).not.toBe(undefined, `Expected info[${key}] to be defined, but it was undefined`)
+		expect(info[key]).not.toBe(null, `Expected info[${key}] to be non-null, but it was null`)
+		if (typeof info[key] === 'string') {
+			expect(info[key].trim()).not.toBe('', `Expected info[${key}] to be non-empty string, but it was: "${info[key]}"`)
+		} else {
+			expect(info[key]).toBeTruthy(`Expected info[${key}] to be truthy, but it was: ${JSON.stringify(info[key])}`)
+		}
 	}
 
 	// Test markdown and plaintext building functions
@@ -54,6 +60,7 @@ for (const [siteName, siteConfig] of Object.entries(siteConfigs)) {
 					user: 'https://github.com/microsoft',
 					release: 'https://github.com/microsoft/playwright/releases/tag/v1.32.3',
 					commit: 'https://github.com/golang/go/commit/96d8ff00c2d6a88384863a656fb5e53716b614d3',
+					action_run: 'https://github.com/jonfriesen/quickcite/actions/runs/10446232111',
 				},
 				instagram: {
 					profile: 'https://www.instagram.com/jonfriesen/',
