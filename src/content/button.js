@@ -3,43 +3,60 @@ import clipboardMdSvg from '../assets/clipboard2.svg'
 import checkmarkSvg from '../assets/checkmark.svg'
 import buttonStyle from '../styles/button.css?raw'
 
-function createShadowDomButton(config, formatPreference, selectedStyle) {
-	const wrapper = document.createElement('div')
-	wrapper.id = `${config.buttonId}-wrapper`
-	wrapper.className = `quickcite-button-wrapper`
-	wrapper.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 9999;
-    `
+function createIframeButton(config, formatPreference, selectedStyle) {
+	const iframe = document.createElement('iframe')
+	iframe.id = `${config.buttonId}-iframe`
+	iframe.className = `quickcite-button-iframe`
+	iframe.style.cssText = `
+		position: fixed;
+		bottom: 20px;
+		right: 20px;
+		z-index: 9999;
+		border: none;
+		background: transparent;
+		width: 50px;
+		height: 50px;
+	`
 
-	const shadowRoot = wrapper.attachShadow({ mode: 'open' })
+	// Wait for the iframe to load before adding content
+	iframe.onload = () => {
+		const iframeDoc = iframe.contentDocument || iframe.contentWindow.document
 
-	const button = document.createElement('button')
-	button.id = config.buttonId
+		// Create button inside iframe
+		const button = iframeDoc.createElement('button')
+		button.id = config.buttonId
 
-	// Inline the CSS directly in the Shadow DOM
-	const style = document.createElement('style')
-	style.textContent = buttonStyle // Assuming buttonStyle contains the full CSS content
+		// Add style to iframe
+		const style = iframeDoc.createElement('style')
+		style.textContent = buttonStyle // Assuming buttonStyle contains the full CSS content
 
-	shadowRoot.appendChild(style)
-	shadowRoot.appendChild(button)
+		iframeDoc.head.appendChild(style)
+		iframeDoc.body.appendChild(button)
 
-	return { wrapper, button }
+		// // Populate button content
+		// let icon = formatPreference === 'markdown' ? clipboardMdSvg : clipboardTextSvg
+		// button.className = `copy-button ${selectedStyle}`
+		// button.innerHTML = `<img src="${chrome.runtime.getURL(icon)}" alt="Copy Info">`
+	}
+
+	return iframe
 }
 
 export function injectOrUpdateButton(config, formatPreference, selectedStyle, siteConfigs) {
-	let wrapper = document.getElementById(`${config.buttonId}-wrapper`)
+	let iframe = document.getElementById(`${config.buttonId}-iframe`)
 	let button
 
-	if (!wrapper) {
-		const { wrapper: newWrapper, button: newButton } = createShadowDomButton(config, formatPreference, selectedStyle)
-		document.body.appendChild(newWrapper)
-		wrapper = newWrapper
-		button = newButton
+	if (!iframe) {
+		iframe = createIframeButton(config, formatPreference, selectedStyle)
+		document.body.appendChild(iframe)
+
+		// Wait for iframe to load before accessing button
+		iframe.onload = () => {
+			button = iframe.contentDocument.getElementById(config.buttonId)
+			// TODO: This needs tos et the values on load!!
+		}
 	} else {
-		button = wrapper.shadowRoot.getElementById(config.buttonId)
+		button = iframe.contentDocument.getElementById(config.buttonId)
 		button.removeEventListener('click', button.clickHandler)
 	}
 
@@ -53,6 +70,7 @@ export function injectOrUpdateButton(config, formatPreference, selectedStyle, si
 	button.clickHandler = () => handleButtonClick(config, formatPreference, siteConfigs, button)
 
 	// Add the new click event listener
+	console.log('settings clikc handler')
 	button.addEventListener('click', button.clickHandler)
 }
 
@@ -87,6 +105,6 @@ function updateButtonAfterCopy(button) {
 }
 
 export function removeButtons() {
-	const wrappers = document.querySelectorAll('.quickcite-button-wrapper')
-	wrappers.forEach((wrapper) => wrapper.remove())
+	const iframes = document.querySelectorAll('.quickcite-button-iframe')
+	iframes.forEach((iframe) => iframe.remove())
 }
