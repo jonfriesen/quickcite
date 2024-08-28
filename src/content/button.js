@@ -1,22 +1,74 @@
 import clipboardTextSvg from '../assets/clipboard.svg'
 import clipboardMdSvg from '../assets/clipboard2.svg'
 import checkmarkSvg from '../assets/checkmark.svg'
+import buttonStyle from '../styles/button.css?raw'
 
-export function injectOrUpdateButton(config, formatPreference, selectedStyle, siteConfigs) {
-	let button = document.getElementById(config.buttonId)
+function createIframeButton(config, formatPreference, selectedStyle, siteConfigs) {
+	const iframe = document.createElement('iframe')
+	iframe.id = `${config.buttonId}-iframe`
+	iframe.className = `quickcite-button-iframe`
+	iframe.style.cssText = `
+		position: fixed;
+		bottom: 20px;
+		right: 20px;
+		z-index: 9999;
+		border: none;
+		background: transparent;
+		width: 50px;
+		height: 50px;
+	`
 
-	if (!button) {
-		button = document.createElement('button')
+	// Wait for the iframe to load before adding content
+	iframe.onload = () => {
+		const iframeDoc = iframe.contentDocument || iframe.contentWindow.document
+
+		// Create button inside iframe
+		const button = iframeDoc.createElement('button')
 		button.id = config.buttonId
-		document.body.appendChild(button)
+
+		// Add style to iframe
+		const style = iframeDoc.createElement('style')
+		style.textContent = buttonStyle
+
+		iframeDoc.head.appendChild(style)
+		iframeDoc.body.appendChild(button)
+
+		// Setup the button after it's been added to the DOM
+		setupButton(config, button, formatPreference, selectedStyle, siteConfigs)
 	}
 
-	let icon = formatPreference === 'markdown' ? clipboardMdSvg : clipboardTextSvg
+	return iframe
+}
 
+export function injectOrUpdateButton(config, formatPreference, selectedStyle, siteConfigs) {
+	let iframe = document.getElementById(`${config.buttonId}-iframe`)
+	let button
+
+	if (!iframe) {
+		iframe = createIframeButton(config, formatPreference, selectedStyle, siteConfigs)
+		document.body.appendChild(iframe)
+	} else {
+		button = iframe.contentDocument.getElementById(config.buttonId)
+		if (button) {
+			button.removeEventListener('click', button.clickHandler)
+			setupButton(config, button, formatPreference, selectedStyle, siteConfigs)
+		}
+	}
+}
+
+function setupButton(config, button, formatPreference, selectedStyle, siteConfigs) {
+	// sets the button details
+	let icon = formatPreference === 'markdown' ? clipboardMdSvg : clipboardTextSvg
 	button.className = `copy-button ${selectedStyle}`
 	button.innerHTML = `<img src="${chrome.runtime.getURL(icon)}" alt="Copy Info">`
 
-	button.addEventListener('click', () => handleButtonClick(config, formatPreference, siteConfigs, button))
+	// We inject the clickHandler on the button so that in the event of config change
+	// it can be removed, since we need a reference to it.
+	button.clickHandler = () => handleButtonClick(config, formatPreference, siteConfigs, button)
+
+	// Add the new click event listener
+	console.debug('setting click handler')
+	button.addEventListener('click', button.clickHandler)
 }
 
 function handleButtonClick(config, formatPreference, siteConfigs, button) {
@@ -50,6 +102,6 @@ function updateButtonAfterCopy(button) {
 }
 
 export function removeButtons() {
-	const buttons = document.querySelectorAll('.copy-button')
-	buttons.forEach((button) => button.remove())
+	const iframes = document.querySelectorAll('.quickcite-button-iframe')
+	iframes.forEach((iframe) => iframe.remove())
 }
