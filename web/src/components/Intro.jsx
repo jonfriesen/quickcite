@@ -64,7 +64,7 @@ const AnimatedGradientText = ({ children }) => (
 			}
 		`}</style>
 		<h1 className="ml-4 font-display text-5xl font-bold tracking-tight">
-			<span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 to-white animate-gradient-x">{children}</span>
+			<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#861cff] via-[#ff34db] to-[#861cff] animate-gradient-x">{children}</span>
 		</h1>
 	</>
 )
@@ -74,7 +74,7 @@ export function Intro() {
 		<>
 			<div>
 				<Link href="/" className="flex items-center">
-					<Logo className="h-16 rotate-90 w-auto" />
+					<Logo className="h-16 w-auto" />
 					<AnimatedGradientText>QuickCite</AnimatedGradientText>
 				</Link>
 			</div>
@@ -89,7 +89,7 @@ export function Intro() {
 					<span className="text-green-400">m</span>
 					<span className="text-red-400">e</span>
 				</span>{' '}
-				extension to build <span className="text-sky-300">context rich links</span>
+				extension to build <span className="text-purple-300">context rich links</span>
 			</h1>
 			{/* <div className="mt-6 mb-6 bg-blue-600 border-l-4 border-blue-400 text-blue-200 p-4 rounded">
 				<div className="flex items-center">
