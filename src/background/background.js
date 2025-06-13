@@ -63,7 +63,7 @@ const handleNavigation = debounce((details) => {
 			}
 			chrome.storage.sync.get({ siteConfigs: {} }, (items) => {
 				const config = getMatchingConfig(tab.url, items.siteConfigs)
-				const action = config ? 'injectButton' : 'removeButtons'
+				const action = 'updateConfig'
 				sendMessageToContentScript(details.tabId, action, config)
 			})
 		})
@@ -135,6 +135,6 @@ chrome.management.getSelf(function (info) {
 		console.log('QuickCite - verbose logging enabled')
 		console.debug = console.log // Enable debug in development
 	} else {
-		console.debug = function () {} // Disable in production
+		console.debug = function () { } // Disable in production
 	}
 })
