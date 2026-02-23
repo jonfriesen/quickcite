@@ -19,9 +19,9 @@ const urlPatternTestCases = [
 const markdownTestCases = [
 	{
 		page: 'pr',
-		info: { number: '#123', title: 'Add new feature' },
+		info: { repo: 'user/repo', number: '#123', title: 'Add new feature' },
 		url: 'https://github.com/user/repo/pull/123',
-		expected: '[#123: Add new feature](https://github.com/user/repo/pull/123)',
+		expected: '[user/repo #123: Add new feature](https://github.com/user/repo/pull/123)',
 	},
 	{
 		page: 'issue',
