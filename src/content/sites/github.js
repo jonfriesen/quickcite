@@ -6,8 +6,9 @@ const github = {
 			urlPattern: /^https:\/\/github\.com\/[^\/]+\/[^\/]+\/pull\/\d+/,
 			buttonId: 'gh-pr-copy-button',
 			getInfo: () => {
-				const prNumber = document.querySelector('h1.gh-header-title > span.f1-light').textContent.trim()
-				const titleElement = document.querySelector('bdi.js-issue-title.markdown-title')
+				const numberElement = document.querySelector('[data-component="PH_Title"] .f1-light') || document.querySelector('h1.gh-header-title > span.f1-light')
+				const prNumber = numberElement ? numberElement.textContent.trim() : `#${window.location.pathname.match(/\/pull\/(\d+)/)?.[1] || ''}`
+				const titleElement = document.querySelector('[data-component="PH_Title"] .markdown-title') || document.querySelector('bdi.js-issue-title.markdown-title')
 				const prTitle = titleElement ? titleElement.textContent.trim() : document.title
 				return { number: prNumber, title: prTitle }
 			},
@@ -18,8 +19,9 @@ const github = {
 			urlPattern: /^https:\/\/github\.com\/[^\/]+\/[^\/]+\/issues\/\d+/,
 			buttonId: 'gh-issue-copy-button',
 			getInfo: () => {
-				const issueNumber = document.querySelector('h1.gh-header-title > span.f1-light').textContent.trim()
-				const titleElement = document.querySelector('bdi.js-issue-title.markdown-title')
+				const numberElement = document.querySelector('[data-component="PH_Title"] .f1-light') || document.querySelector('h1.gh-header-title > span.f1-light')
+				const issueNumber = numberElement ? numberElement.textContent.trim() : `#${window.location.pathname.match(/\/issues\/(\d+)/)?.[1] || ''}`
+				const titleElement = document.querySelector('[data-component="PH_Title"] .markdown-title') || document.querySelector('bdi.js-issue-title.markdown-title')
 				const issueTitle = titleElement ? titleElement.textContent.trim() : document.title
 				return { number: issueNumber, title: issueTitle }
 			},
@@ -30,8 +32,9 @@ const github = {
 			urlPattern: /^https:\/\/github\.com\/[^\/]+\/[^\/]+\/discussions\/\d+/,
 			buttonId: 'gh-discussion-copy-button',
 			getInfo: () => {
-				const discussionNumber = document.querySelector('h1.gh-header-title > span.f1-light').textContent.trim()
-				const titleElement = document.querySelector('h1.gh-header-title')
+				const numberElement = document.querySelector('[data-component="PH_Title"] .f1-light') || document.querySelector('h1.gh-header-title > span.f1-light')
+				const discussionNumber = numberElement ? numberElement.textContent.trim() : `#${window.location.pathname.match(/\/discussions\/(\d+)/)?.[1] || ''}`
+				const titleElement = document.querySelector('[data-component="PH_Title"]') || document.querySelector('h1.gh-header-title')
 				const discussionTitle = titleElement ? titleElement.textContent.trim().replace(discussionNumber, '').trim() : document.title
 				return { number: discussionNumber, title: discussionTitle }
 			},
