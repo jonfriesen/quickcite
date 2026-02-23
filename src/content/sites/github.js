@@ -10,10 +10,12 @@ const github = {
 				const prNumber = numberElement ? numberElement.textContent.trim() : `#${window.location.pathname.match(/\/pull\/(\d+)/)?.[1] || ''}`
 				const titleElement = document.querySelector('[data-component="PH_Title"] .markdown-title') || document.querySelector('bdi.js-issue-title.markdown-title')
 				const prTitle = titleElement ? titleElement.textContent.trim() : document.title
-				return { number: prNumber, title: prTitle }
+				const pathParts = window.location.pathname.split('/')
+				const repo = `${pathParts[1]}/${pathParts[2]}`
+				return { repo, number: prNumber, title: prTitle }
 			},
-			buildMarkdown: (info, url) => `[${info.number}: ${info.title}](${url})`,
-			buildPlaintext: (info, url) => `${info.number}: ${info.title} - ${url}`,
+			buildMarkdown: (info, url) => `[${info.repo} ${info.number}: ${info.title}](${url})`,
+			buildPlaintext: (info, url) => `${info.repo} ${info.number}: ${info.title} - ${url}`,
 		},
 		issue: {
 			urlPattern: /^https:\/\/github\.com\/[^\/]+\/[^\/]+\/issues\/\d+/,
